@@ -1,31 +1,49 @@
-   /* 1 · ФОНТОВЕ — 2 файла общо, variable, subset cyrillic+latin
+/* ==========================================================================
+   1 · ФОНТОВЕ — self-hosted, variable (едно файлче покрива всички тежести)
    --------------------------------------------------------------------------
-   Генериране (виж README-то за pyftsubset командите).
-   В <head> ЗАДЪЛЖИТЕЛНО и двата preload-а, ПРЕДИ този stylesheet:
-   <link rel="preload" href="/wp-content/themes/blocksy-child/assets/fonts/playfair-cyr.woff2" as="font" type="font/woff2" crossorigin>
-   <link rel="preload" href="/wp-content/themes/blocksy-child/assets/fonts/manrope-cyr.woff2" as="font" type="font/woff2" crossorigin>
+   Файловете са в public/fonts/ → сервират се от корена: /fonts/...
+   Всеки шрифт е разделен на 2 подмножества (кирилица + латиница).
+   Браузърът тегли само това, което реално има на страницата —
+   за български текст това почти винаги е само cyrillic файлът.
+   Източник: Fontsource (Google Fonts, OFL лиценз).
    ========================================================================== */
 
+/* --- Playfair Display — заглавия, лого ----------------------------------- */
 @font-face {
   font-family: "Playfair Display";
-  src: url("assets/fonts/playfair-cyr.woff2") format("woff2-variations");
-  font-weight: 400 900;          /* variable — една заявка за всички тежести */
+  src: url("/fonts/playfair-display-cyrillic-wght-normal.woff2") format("woff2-variations");
+  font-weight: 400 900;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+@font-face {
+  font-family: "Playfair Display";
+  src: url("/fonts/playfair-display-latin-wght-normal.woff2") format("woff2-variations");
+  font-weight: 400 900;
   font-style: normal;
   font-display: swap;
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
-                 U+02DC, U+0304, U+0308, U+0329, U+0400-045F, U+0490-0491,
-                 U+04B0-04B1, U+2000-206F, U+2070-209F, U+20AC, U+2113, U+2116,
-                 U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+                 U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122,
+                 U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
 
+/* --- Manrope — основен текст -------------------------------------------- */
 @font-face {
   font-family: "Manrope";
-  src: url("assets/fonts/manrope-cyr.woff2") format("woff2-variations");
-  font-weight: 300 800;
+  src: url("/fonts/manrope-cyrillic-wght-normal.woff2") format("woff2-variations");
+  font-weight: 200 800;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+@font-face {
+  font-family: "Manrope";
+  src: url("/fonts/manrope-latin-wght-normal.woff2") format("woff2-variations");
+  font-weight: 200 800;
   font-style: normal;
   font-display: swap;
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
-                 U+02DC, U+0304, U+0308, U+0329, U+0400-045F, U+0490-0491,
-                 U+04B0-04B1, U+2000-206F, U+2070-209F, U+20AC, U+2113, U+2116,
-                 U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+                 U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122,
+                 U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }

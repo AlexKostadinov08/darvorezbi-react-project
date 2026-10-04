@@ -2,10 +2,10 @@ import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { BrowserRouter } from "react-router";
 
-import './styles/fonts.css';
-import './styles/base.css'
+// Глобални стилове — редът е важен: шрифтове → токени → базов слой
 import './styles/fonts.css'
 import './styles/tokens.css'
+import './styles/base.css'
 
 import App from "./App.jsx";
 
@@ -15,4 +15,4 @@ createRoot(document.getElementById("root")).render(
             <App />
         </BrowserRouter>
     </StrictMode>
-);
+);

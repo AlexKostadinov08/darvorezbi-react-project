@@ -57,6 +57,7 @@
   /* --- Типография --------------------------------------------------------- */
   --dr-font-head: "Playfair Display", Georgia, "Times New Roman", serif;
   --dr-font-body: "Manrope", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --dr-font-display: var(--dr-font-head);   /* лого, навигация в хедъра   */
 
   /* Плавна скала с clamp() → НУЛА media queries за типография.
      Формат: clamp(min, preferred, max) — 360px … 1440px viewport. */
@@ -110,4 +111,4 @@
   --dr-container:        1180px;
   --dr-container-narrow: 760px;   /* текстови секции — четимост              */
   --dr-gutter: clamp(1rem, 0.6rem + 2vw, 2rem);
-}
+}

@@ -1,0 +1,701 @@
+/* ==========================================================================
+   5 · .pd — ПРОДУКТОВ ШАБЛОН / ЛЕНДИНГ
+   --------------------------------------------------------------------------
+   ВСИЧКО е скоупнато в .pd → нула конфликти с останалите страници.
+   Страницата с детайли започва с:  <div className="pd"> … </div>
+   ========================================================================== */
+
+.pd {
+  --pd-gap: var(--dr-sp-lg);
+  color: var(--dr-text);
+  font-size: var(--dr-fs-base);
+  line-height: var(--dr-lh-body);
+}
+
+/* Вертикален ритъм: разстоянието идва от ЕДНО правило, не от margin по
+   всеки елемент. По-малко CSS, никакво collapse главоболие. */
+.pd > * + * { margin-top: var(--dr-sp-md); }
+.pd > * + h2 { margin-top: var(--pd-gap); }
+.pd > * + h3 { margin-top: var(--dr-sp-lg); }
+
+.pd h2 { font-size: var(--dr-fs-h2); }
+.pd h3 { font-size: var(--dr-fs-h3); }
+.pd h4 { font-size: var(--dr-fs-h4); font-family: var(--dr-font-body); font-weight: 700; }
+.pd p, .pd ul, .pd ol { max-width: var(--dr-measure); }
+.pd ul, .pd ol { padding-left: 1.25em; }
+.pd li + li { margin-top: var(--dr-sp-2xs); }
+.pd strong { font-weight: 700; color: var(--dr-text); }
+
+/* :where() нулира специфичността на селектора → правилото важи за всеки
+   „гол" линк в текста, но НЕ бие стилизираните (.pd-btn, .pd-tag).
+   Без него `.pd a` (0,0,1,1) побеждава `.pd-btn` (0,0,1,0) и бутоните
+   излизат подчертани. */
+.pd :where(a) {
+  color: var(--dr-primary);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+  transition: color var(--dr-transition);
+}
+.pd :where(a):hover { color: var(--dr-primary-hover); text-decoration-thickness: 2px; }
+
+/* --- 5.1 Kicker + лийд ---------------------------------------------------- *
+ * Лийдът е ПЪРВИЯТ параграф: пряк отговор на „какво е това" в 2–3 реда.     *
+ * Това е парчето, което AI търсачките цитират — дръж го конкретно.          *
+ * ---------------------------------------------------------------------- */
+.pd-kicker {
+  font-size: var(--dr-fs-xs);
+  font-weight: 700;
+  letter-spacing: var(--dr-ls-kicker);
+  text-transform: uppercase;
+  color: var(--dr-accent);
+}
+.pd-lede {
+  font-size: var(--dr-fs-lg);
+  line-height: var(--dr-lh-snug);
+  color: var(--dr-text-soft);
+  max-width: var(--dr-measure-lede);
+}
+
+/* --- 5.2 Спецификации (<dl>) --------------------------------------------- *
+ * Най-цитируемият блок на страницата. Ползвай <dl><dt>Материал</dt>        *
+ * <dd>Орехово дърво</dd>…</dl> — машинно четимо и се сдвоява 1:1 с          *
+ * additionalProperty в Product schema-та.                                   *
+ * ---------------------------------------------------------------------- */
+.pd-specs {
+  display: grid;
+  grid-template-columns: minmax(8rem, 13rem) 1fr;
+  gap: 0;
+  margin: 0;
+  max-width: var(--dr-measure);
+  border-top: 1px solid var(--dr-border);
+  font-size: var(--dr-fs-sm);
+  font-variant-numeric: tabular-nums;
+}
+.pd-specs dt {
+  padding: var(--dr-sp-xs) var(--dr-sp-sm) var(--dr-sp-xs) 0;
+  font-size: var(--dr-fs-2xs);
+  font-weight: 700;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--dr-text-muted);
+  border-bottom: 1px solid var(--dr-border);
+}
+.pd-specs dd {
+  padding: var(--dr-sp-xs) 0;
+  margin: 0;
+  color: var(--dr-text);
+  border-bottom: 1px solid var(--dr-border);
+}
+
+/* --- 5.3 Акценти (защо точно това изделие) ------------------------------- */
+.pd-highlights {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+  gap: var(--dr-sp-sm);
+  list-style: none;
+  padding: 0;
+  max-width: none;
+}
+.pd-highlights li {
+  margin: 0;
+  padding: var(--dr-sp-sm) var(--dr-sp-md);
+  background: var(--dr-surface);
+  border: 1px solid var(--dr-border);
+  border-left: 3px solid var(--dr-gold);
+  border-radius: var(--dr-radius-sm);
+  font-size: var(--dr-fs-sm);
+}
+.pd-highlights b {
+  display: block;
+  font-family: var(--dr-font-head);
+  font-size: var(--dr-fs-md);
+  font-weight: 600;
+  margin-bottom: var(--dr-sp-3xs);
+}
+
+/* --- 5.4 Процес на изработка (номерирани стъпки) ------------------------- */
+.pd-steps {
+  list-style: none;
+  counter-reset: pd-step;
+  padding: 0;
+  max-width: var(--dr-measure);
+}
+.pd-steps > li {
+  counter-increment: pd-step;
+  position: relative;
+  padding-left: 3.25rem;
+}
+.pd-steps > li + li { margin-top: var(--dr-sp-md); }
+.pd-steps li::before {
+  content: counter(pd-step);
+  position: absolute;
+  left: 0; top: -0.1em;
+  width: 2.25rem; height: 2.25rem;
+  display: grid; place-items: center;
+  font-family: var(--dr-font-head);
+  font-size: var(--dr-fs-md);
+  font-weight: 600;
+  color: var(--dr-on-primary);
+  background: var(--dr-primary);
+  border-radius: var(--dr-radius-pill);
+}
+.pd-steps b { display: block; font-weight: 700; }
+
+/* --- 5.5 Думите на майстора (pull quote) --------------------------------- */
+.pd-quote {
+  margin: 0;
+  padding: var(--dr-sp-lg) var(--dr-sp-md);
+  background: var(--dr-surface-warm);
+  border-radius: var(--dr-radius-lg);
+  font-family: var(--dr-font-head);
+  font-size: var(--dr-fs-lg);
+  line-height: var(--dr-lh-snug);
+  text-align: center;
+}
+.pd-quote p { max-width: 46ch; margin: 0 auto; }
+.pd-quote footer {
+  margin-top: var(--dr-sp-sm);
+  font-family: var(--dr-font-body);
+  font-size: var(--dr-fs-sm);
+  font-weight: 600;
+  color: var(--dr-text-soft);
+  letter-spacing: .02em;
+}
+
+/* --- 5.6 Callout / бележка ----------------------------------------------- */
+.pd-note {
+  padding: var(--dr-sp-sm) var(--dr-sp-md);
+  background: var(--dr-surface-alt);
+  border-left: 4px solid var(--dr-gold-deep);
+  border-radius: 0 var(--dr-radius) var(--dr-radius) 0;
+  font-size: var(--dr-fs-sm);
+}
+.pd-note > :first-child { margin-top: 0; }
+
+/* --- 5.7 Split секция (изображение + текст) — за лендинг частта ---------- */
+.pd-split {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(22rem, 100%), 1fr));
+  gap: var(--dr-sp-lg);
+  align-items: center;
+}
+.pd-split img {
+  width: 100%;
+  border-radius: var(--dr-radius-lg);
+  box-shadow: var(--dr-shadow-md);
+}
+.pd-split > div > :first-child { margin-top: 0; }
+/* .pd-split.is-reversed → изображението отдясно на десктоп */
+.pd-split.is-reversed > :first-child { order: 2; }
+@media (max-width: 47rem) {
+  .pd-split.is-reversed > :first-child { order: 0; }
+}
+
+/* --- 5.8 FAQ — <details>/<summary>, НУЛА JavaScript ---------------------- *
+ * Достъпно по подразбиране (клавиатура + screen reader) и се сдвоява с      *
+ * FAQPage JSON-LD. Никакъв accordion скрипт = никакъв JS bundle.            *
+ * ---------------------------------------------------------------------- */
+.pd-faq {
+  background: var(--dr-surface);
+  border: 1px solid var(--dr-border);
+  border-radius: var(--dr-radius);
+  overflow: hidden;
+}
+.pd-faq details + details { border-top: 1px solid var(--dr-border); }
+.pd-faq summary {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--dr-sp-sm);
+  padding: var(--dr-sp-sm) var(--dr-sp-md);
+  cursor: pointer;
+  font-weight: 700;
+  font-size: var(--dr-fs-sm);
+  list-style: none;
+  transition: background var(--dr-transition);
+}
+.pd-faq summary::-webkit-details-marker { display: none; }
+.pd-faq summary:hover { background: var(--dr-surface-alt); }
+.pd-faq summary::after {
+  content: "";
+  flex: 0 0 auto;
+  width: .6em; height: .6em;
+  border-right: 2px solid var(--dr-primary);
+  border-bottom: 2px solid var(--dr-primary);
+  transform: rotate(45deg);
+  transition: transform var(--dr-transition);
+}
+.pd-faq details[open] summary::after { transform: rotate(-135deg); }
+.pd-faq details > div,
+.pd-faq details > p {
+  padding: 0 var(--dr-sp-md) var(--dr-sp-md);
+  font-size: var(--dr-fs-sm);
+  color: var(--dr-text-soft);
+  max-width: var(--dr-measure);
+}
+
+/* --- 5.9 Доверие (ръчна изработка · доставка · custom) ------------------- */
+.pd-trust {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+  gap: var(--dr-sp-2xs) var(--dr-sp-lg);
+  list-style: none;
+  padding: var(--dr-sp-sm) 0;
+  margin: 0;
+  border-top: 1px solid var(--dr-border);
+  border-bottom: 1px solid var(--dr-border);
+  font-size: var(--dr-fs-sm);
+  color: var(--dr-text-soft);
+  max-width: none;
+}
+.pd .pd-trust li {
+  margin: 0;
+  display: grid;
+  grid-template-columns: 1.1em 1fr;
+  align-items: start;
+  gap: .5em;
+}
+/* Чекмаркът е в кутия с фиксирана височина → базовата линия не се мести,
+   независимо колко дълъг е текстът и дали се пренася на втори ред. */
+.pd-trust li::before {
+  content: "";
+  width: .9em;
+  height: .48em;
+  margin-top: .42em;
+  border-left: 2px solid var(--dr-success);
+  border-bottom: 2px solid var(--dr-success);
+  transform: rotate(-45deg);
+}
+
+/* --- 5.10 CTA лента ------------------------------------------------------ */
+.pd-cta {
+  padding: var(--dr-sp-xl) var(--dr-sp-md);
+  background: var(--dr-surface-ink);
+  color: var(--dr-text-invert);
+  border-radius: var(--dr-radius-lg);
+  text-align: center;
+}
+.pd-cta h2, .pd-cta h3 { color: var(--dr-text-invert); margin-top: 0; }
+/* Явен токен, не opacity: смесеният от opacity цвят не се вижда в никакъв
+   одит и не може да се провери. Този е 9.81:1 и е записан черно на бяло. */
+.pd-cta p {
+  max-width: 52ch;
+  margin-inline: auto;
+  color: var(--dr-text-invert-soft);
+}
+.pd-cta .pd-btn { margin-top: var(--dr-sp-md); }
+
+/* --- 5.11 Бутони  --------- */
+.pd-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: .5em;
+  padding: .8em 1.9em;
+  background: var(--dr-primary);
+  color: var(--dr-on-primary);
+  font-family: var(--dr-font-body);
+  font-size: var(--dr-fs-sm);
+  font-weight: 700;
+  line-height: 1.2;
+  text-decoration: none;
+  border: 0;
+  border-radius: var(--dr-radius-sm);
+  cursor: pointer;
+  transition: background var(--dr-transition), transform var(--dr-transition);
+}
+.pd-btn:hover {
+  background: var(--dr-primary-hover);
+  color: var(--dr-on-primary);
+  transform: translateY(-1px);
+  text-decoration: none;
+}
+.pd-btn--ghost {
+  background: transparent;
+  color: var(--dr-primary);
+  box-shadow: inset 0 0 0 2px var(--dr-primary);
+}
+.pd-btn--ghost:hover { background: var(--dr-primary-soft); color: var(--dr-primary-hover); }
+/* Върху тъмната CTA лента бутонът става светъл */
+.pd-cta .pd-btn { background: var(--dr-gold); color: var(--dr-text); }
+.pd-cta .pd-btn:hover { background: #D9AE73; color: var(--dr-text); }
+
+/* --- 5.12 Тагове / баджове ---------------------------------------------- */
+.pd-tag {
+  display: inline-block;
+  padding: .25em .8em;
+  background: var(--dr-primary-soft);
+  color: var(--dr-primary);
+  border-radius: var(--dr-radius-pill);
+  font-size: var(--dr-fs-2xs);
+  font-weight: 700;
+  letter-spacing: .03em;
+  text-transform: uppercase;
+}
+.pd-tag--stock { background: #E3EDE4; color: var(--dr-success); }
+.pd-tag--custom { background: var(--dr-surface-warm); color: var(--dr-accent); }
+
+/* --- 5.13 Галерия в описанието ------------------------------------------ */
+.pd-gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(13rem, 100%), 1fr));
+  gap: var(--dr-sp-sm);
+  list-style: none;
+  padding: 0;
+  max-width: none;
+}
+.pd-gallery li { margin: 0; }
+.pd-gallery img {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  border-radius: var(--dr-radius);
+  box-shadow: var(--dr-shadow-sm);
+}
+.pd-gallery figcaption {
+  margin-top: var(--dr-sp-3xs);
+  font-size: var(--dr-fs-xs);
+  color: var(--dr-text-muted);
+}
+
+/* --- 5.14 Обща таблица -------------------------------------------------- */
+.pd-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--dr-fs-sm);
+  font-variant-numeric: tabular-nums;
+}
+.pd-table th, .pd-table td {
+  padding: var(--dr-sp-2xs) var(--dr-sp-xs);
+  text-align: left;
+  border-bottom: 1px solid var(--dr-border);
+}
+.pd-table th { font-weight: 700; background: var(--dr-surface-alt); }
+
+/* --- 5.15 Помощни ------------------------------------------------------- */
+.pd-center { text-align: center; margin-inline: auto; }
+.pd-narrow { max-width: var(--dr-container-narrow); margin-inline: auto; }
+.pd-muted  { color: var(--dr-text-muted); font-size: var(--dr-fs-sm); }
+.pd-divider {
+  height: 1px;
+  background: var(--dr-border);
+  border: 0;
+  margin-block: var(--dr-sp-lg);
+}
+/* Резбован разделител — декоративна розета между секции */
+.pd-ornament {
+  border: 0;
+  height: auto;
+  margin-block: var(--dr-sp-lg);
+  text-align: center;
+  color: var(--dr-gold);
+  overflow: visible;
+}
+.pd-ornament::before {
+  content: "❖";
+  font-size: var(--dr-fs-md);
+  letter-spacing: .8em;
+  padding-left: .8em;
+}
+
+/* Дълга страница: браузърът пропуска layout на секции извън екрана.
+   contain-intrinsic-size пази скролбара стабилен → нула CLS.
+   Слагай го САМО на секции ПОД първия екран — никога на hero-то. */
+.pd-defer {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 420px;
+}
+
+/* Печат: без декорации, отворени FAQ-и, четимо */
+@media print {
+  .pd-cta, .pd-btn, .pd-ornament { display: none !important; }
+  .pd-faq details { display: block; }
+  .pd { font-size: 11pt; }
+}
+
+
+/* --- 5.16 Кратко описание в кутия — `.pd-summary` ------------------------ *
+ * Обградената версия на краткото описание (Woo short description или        *
+ * първият блок на описанието). 2–4 къси параграфа, всеки е едно твърдение.  *
+ * ---------------------------------------------------------------------- */
+.pd-summary {
+  padding: var(--dr-sp-lg) var(--dr-sp-md);
+  background: var(--dr-surface);
+  border: 1px solid var(--dr-border);
+  border-radius: var(--dr-radius-lg);
+  box-shadow: var(--dr-shadow-sm);
+}
+.pd-summary p {
+  margin: 0;
+  font-size: var(--dr-fs-md);
+  line-height: var(--dr-lh-snug);
+  color: var(--dr-text-soft);
+  max-width: var(--dr-measure-lede);
+}
+.pd-summary p + p { margin-top: var(--dr-sp-sm); }
+.pd-summary p:first-child { color: var(--dr-text); }
+/* Заглавие в кутията: краткото описание може да носи името на мотива */
+.pd-summary h2 {
+  margin: 0 0 var(--dr-sp-sm);
+  font-size: var(--dr-fs-h3);
+  line-height: var(--dr-lh-tight);
+  color: var(--dr-text);
+}
+.pd-summary strong, .pd-summary b {
+  font-family: var(--dr-font-head);
+  font-weight: 600;
+  color: var(--dr-text);
+}
+/* Топъл вариант — за страници, където кутията стои сама над цената */
+.pd-summary.is-warm {
+  background: var(--dr-surface-warm);
+  border-color: transparent;
+  box-shadow: none;
+}
+
+/* --- 5.17 Ред от тагове — `.pd-tags` -------------------------------------- *
+ * Обвивка за няколко .pd-tag: gap вместо празни текстови възли, за да не     *
+ * зависи отстоянието от whitespace в HTML-а.                                 *
+ * ---------------------------------------------------------------------- */
+.pd-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--dr-sp-2xs);
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  max-width: none;
+}
+.pd .pd-tags li { margin: 0; }
+
+/* --- 5.18 Текст + декоративен арт в полето — `.pd-textart · .pd-art` ------ *
+ * Текстът пази мярката си (--dr-measure), а свободното поле отстрани носи    *
+ * декоративен PNG (длето, дъска, стърготини). Артът е чиста декорация:       *
+ * alt="" + aria-hidden, и се скрива, докато колоната и артът не се събират, за да не яде екран на телефон.*
+ * ---------------------------------------------------------------------- */
+.pd-textart {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--dr-sp-lg);
+  align-items: center;
+}
+.pd-prose > * + * { margin-top: var(--dr-sp-md); }
+.pd-prose > :first-child { margin-top: 0; }
+.pd-art { display: none; }
+
+@media (min-width: 68rem) {
+  .pd-textart { grid-template-columns: minmax(0, 1fr) 210px; }
+  .pd-textart.is-art-left { grid-template-columns: 210px minmax(0, 1fr); }
+  .pd-textart.has-wide-art { grid-template-columns: minmax(0, 1fr) 280px; }
+  .pd-textart.has-wide-art.is-art-left { grid-template-columns: 280px minmax(0, 1fr); }
+  .pd-textart.is-art-left > .pd-art { order: -1; }
+  .pd-art {
+    display: block;
+    width: 100%;
+    aspect-ratio: 3 / 8;
+  }
+  .pd-art.is-wide { aspect-ratio: 4 / 5; }
+  .pd-art > * {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+}
+
+/* --- 5.19 Центрирана колона — `.pd.is-centered` --------------------------- *
+ * ЕДНА колона с една и съща ширина за всички блокове, центрирана в           *
+ * контейнера. Текстът остава ляво подравнен — центрира се КОЛОНАТА, не       *
+ * редовете. Ширината е в rem (не в ch), за да не се променя от font-size-а   *
+ * на всеки блок — иначе левите ръбове се разминават.                         *
+ * Пълна ширина запазват: .pd-textart (нужно е поле за арта), .pd-cta,        *
+ * .pd-trust и разделителите.                                                 *
+ * ---------------------------------------------------------------------- */
+.pd.is-centered { --pd-col: 47rem; }
+.pd.is-centered > * {
+  width: 100%;
+  max-width: var(--pd-col);
+  margin-inline: auto;
+}
+.pd.is-centered > p,
+.pd.is-centered > ul,
+.pd.is-centered > ol,
+.pd.is-centered > dl { max-width: var(--pd-col); }
+.pd.is-centered > .pd-textart {
+  max-width: none;
+  justify-content: center;
+}
+/* Под прага за арта прозата се подравнява със същата колона */
+.pd.is-centered > .pd-textart > .pd-prose {
+  width: 100%;
+  max-width: var(--pd-col);
+  justify-self: center;
+}
+.pd.is-centered > .pd-cta,
+.pd.is-centered > .pd-trust,
+.pd.is-centered > .pd-divider,
+.pd.is-centered > .pd-ornament { max-width: none; }
+
+@media (min-width: 68rem) {
+  .pd.is-centered > .pd-textart { grid-template-columns: var(--pd-col) 1fr; }
+  .pd.is-centered > .pd-textart.is-art-left { grid-template-columns: 1fr var(--pd-col); }
+  .pd.is-centered > .pd-textart > .pd-prose { width: 100%; max-width: var(--pd-col); justify-self: start; }
+  .pd.is-centered > .pd-textart.is-art-left > .pd-prose { justify-self: end; }
+  .pd.is-centered > .pd-textart > .pd-art { width: 210px; justify-self: center; }
+  .pd.is-centered > .pd-textart.has-wide-art > .pd-art { width: 280px; }
+}
+
+/* --- 5.20 Вертикалният ритъм побеждава `margin: 0` на компонентите -------- *
+ * .pd-tags / .pd-specs / .pd-trust / .pd-quote нулират собствения си margin  *
+ * (за да не наследяват list/figure margin-и от браузъра). Тези правила имат  *
+ * същата специфичност като ритъма, затова ритъмът се повтаря НАКРАЯ на файла *
+ * — иначе съседните блокове се залепват (gap 0).                             *
+ * ---------------------------------------------------------------------- */
+/* ЕДНО разстояние между секциите: всяко начало на секция (h2, h3 или
+   section-обвивка) отваря с --pd-gap, всичко останало вътре е --dr-sp-md.
+   Така всички паузи по страницата се четат еднакво. */
+.pd > * + * { margin-top: var(--dr-sp-md); }
+.pd > * + h2,
+.pd > * + h3,
+.pd > * + section,
+.pd > * + .pd-textart,
+.pd > * + .pd-timeline { margin-top: var(--pd-gap); }
+/* Времевата линия свършва с картонче; следващата секция иска пълната пауза */
+.pd > .pd-timeline + * { margin-top: var(--pd-gap); }
+/* Заглавието и тялото му остават една група */
+.pd > h2 + *,
+.pd > h3 + * { margin-top: var(--dr-sp-md); }
+
+/* Обвивка `section.pd-defer`: вътре ритъмът и мярката важат както в .pd */
+.pd > section:not([class*="pd-cta"]) > * + * { margin-top: var(--dr-sp-md); }
+.pd.is-centered > section:not(.pd-cta) > * {
+  width: 100%;
+  max-width: var(--pd-col);
+  margin-inline: auto;
+}
+
+/* --- 5.21 Времева линия — `.pd-timeline` ---------------------------------- *
+ * Централна ос с точки и картончета, които редуват страните. Без номерация   *
+ * и без цветни бейджове: редът се чете от подредбата, не от цифри.           *
+ * Стъпките са <li> в <ol> заради семантиката, но маркерите са изключени.     *
+ *                                                                            *
+ * Геометрия: всеки <li> е грид `1fr | точка | 1fr`, а оста се чертае на      *
+ * самия <li>, не на <ol>. Така точката и линията имат ЕДИН И СЪЩ containing   *
+ * block и не могат да се разминат. Първата отсечка започва от първата точка,  *
+ * последната свършва на последната, затова оста не виси в празното.           *
+ * Под 52rem оста минава вляво и всички картончета застават отдясно.          *
+ * ---------------------------------------------------------------------- */
+.pd .pd-timeline {
+  --pd-tl-dot: 11px;
+  --pd-tl-gap: var(--dr-sp-2xs);
+  --pd-tl-dot-y: 1.35em;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  max-width: none;
+  display: grid;
+  gap: var(--dr-sp-md);
+}
+.pd .pd-timeline > li {
+  margin: 0;
+  padding: 0;
+  position: relative;
+  display: grid;
+  grid-template-columns: var(--pd-tl-dot) minmax(0, 1fr);
+  column-gap: var(--pd-tl-gap);
+  align-items: start;
+}
+/* Отсечката от оста, която принадлежи на тази стъпка */
+.pd-timeline > li::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: calc(var(--dr-sp-md) * -1);
+  left: calc(var(--pd-tl-dot) / 2 - 1px);
+  width: 2px;
+  background: var(--dr-border);
+}
+.pd-timeline > li:first-child::after { top: var(--pd-tl-dot-y); }
+.pd-timeline > li:last-child::after {
+  bottom: auto;
+  height: var(--pd-tl-dot-y);
+}
+/* Точката */
+.pd-timeline > li::before {
+  content: "";
+  grid-column: 1;
+  width: var(--pd-tl-dot);
+  height: var(--pd-tl-dot);
+  margin-top: calc(var(--pd-tl-dot-y) - var(--pd-tl-dot) / 2);
+  border-radius: 50%;
+  background: var(--dr-surface);
+  border: 2px solid var(--dr-accent, var(--dr-primary));
+  box-sizing: border-box;
+  position: relative;
+  z-index: 1;
+}
+.pd-timeline .pd-tl-card {
+  grid-column: 2;
+  position: relative;
+  padding: var(--dr-sp-md);
+  background: var(--dr-surface);
+  border: 1px solid var(--dr-border);
+  border-radius: var(--dr-radius-lg);
+  box-shadow: var(--dr-shadow-sm);
+}
+/* Показалецът към оста: издава се точно колкото е разстоянието до точката */
+.pd-timeline .pd-tl-card::before {
+  content: "";
+  position: absolute;
+  top: calc(var(--pd-tl-dot-y) - 5px);
+  left: -6px;
+  width: 10px;
+  height: 10px;
+  background: var(--dr-surface);
+  border-left: 1px solid var(--dr-border);
+  border-bottom: 1px solid var(--dr-border);
+  transform: rotate(45deg);
+}
+.pd-timeline .pd-tl-card > b,
+.pd-timeline .pd-tl-card > strong {
+  display: block;
+  margin-bottom: var(--dr-sp-2xs);
+  font-family: var(--dr-font-head);
+  font-size: var(--dr-fs-md);
+  font-weight: 600;
+  color: var(--dr-text);
+}
+.pd-timeline .pd-tl-card > p {
+  margin: 0;
+  max-width: 46ch;
+  font-size: var(--dr-fs-sm);
+  line-height: var(--dr-lh-snug);
+  color: var(--dr-text-soft);
+}
+
+/* Редуващи се страни, когато има място за две колони */
+@media (min-width: 52rem) {
+  .pd .pd-timeline > li {
+    grid-template-columns: minmax(0, 1fr) var(--pd-tl-dot) minmax(0, 1fr);
+  }
+  .pd-timeline > li::before { grid-column: 2; }
+  .pd-timeline > li::after { left: calc(50% - 1px); }
+  /* Нечетните са отляво, с текст, подравнен към оста */
+  .pd-timeline > li:nth-child(odd) .pd-tl-card {
+    grid-column: 1;
+    text-align: right;
+  }
+  .pd-timeline > li:nth-child(odd) .pd-tl-card > p { margin-left: auto; }
+  .pd-timeline > li:nth-child(odd) .pd-tl-card::before {
+    left: auto;
+    right: -6px;
+    border-left: 0;
+    border-bottom: 0;
+    border-right: 1px solid var(--dr-border);
+    border-top: 1px solid var(--dr-border);
+  }
+  .pd-timeline > li:nth-child(even) .pd-tl-card { grid-column: 3; }
+}
+
+.pd.is-centered > .pd-timeline,
+.pd.is-centered > section:not(.pd-cta) > .pd-timeline { max-width: none; }

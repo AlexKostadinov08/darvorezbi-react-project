@@ -202,3 +202,9 @@
 @media (min-width:1025px){
   .dh-drawer,.dh-scrim{display:none;}
 }
+
+/* Лого в header-а: 219x56 на десктоп (атрибутите на <img>),
+   на таблет и телефон се връща на 172x44, защото лентата там е грид 44px 1fr 44px. */
+@media (max-width:1024px){
+  #dh .dh-logo-img{width:172px;height:44px;}
+}

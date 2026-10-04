@@ -1,0 +1,350 @@
+/* =====================================================================
+   darvorezbi.com — начална страница (.drh)
+   Всичко е скоупнато в .drh. Нула :root, нула глобални ресети,
+   нула нови шрифтове. Ползва токените от src/styles/tokens.css.
+   ===================================================================== */
+
+.drh{
+  overflow-x:clip;
+  font-family:var(--dr-font-body,'Manrope',system-ui,sans-serif);
+  font-size:16px;line-height:1.6;
+  color:var(--dr-text,#2B211A);
+  background:var(--dr-paper,#FAF7F2);
+  --drh-ph:#D8D5D0;
+}
+.drh *,.drh *::before,.drh *::after{box-sizing:border-box;}
+.drh img{display:block;max-width:100%;height:auto;}
+.drh h1,.drh h2,.drh p,.drh ul,.drh ol,.drh figure{margin:0;}
+.drh ul,.drh ol{padding:0;list-style:none;}
+.drh a{color:var(--dr-primary,#6B4A2F);text-decoration:none;}
+.drh a:hover{color:var(--dr-primary-hover,#533A24);text-decoration:underline;}
+.drh :focus-visible{outline:2px solid var(--dr-accent,#8C5A28);outline-offset:3px;}
+
+.drh .drh-wrap{max-width:1200px;margin:0 auto;padding:0 32px;}
+.drh-s{padding:96px 0;}
+.drh .drh-only-m{display:none;}
+
+@media (max-width:1024px){ .drh .drh-wrap{padding:0 24px;} }
+@media (max-width:767px) { .drh .drh-wrap{padding:0 20px;} }
+
+/* --- типография --- */
+.drh-h1,.drh-h2{
+  font-family:var(--dr-font-display,'Playfair Display',Georgia,serif);
+  font-weight:600;text-wrap:balance;margin:0;
+}
+.drh-h1{font-size:clamp(32px,4.2vw,58px);line-height:1.14;color:var(--dr-paper,#FAF7F2);max-width:16ch;}
+.drh-h2{font-size:clamp(26px,3vw,38px);line-height:1.2;}
+.drh-on-dark{color:var(--dr-text-invert,#F2EAE0);}
+.drh-kicker{
+  font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--dr-accent,#8C5A28);margin:0 0 14px;
+}
+.drh-kicker-g{color:var(--dr-gold,#C89B5E);}
+.drh-lede{font-size:16px;line-height:1.7;color:var(--dr-text-soft,#5C5148);margin-top:16px;max-width:60ch;}
+.drh-body{font-size:15.5px;line-height:1.75;color:var(--dr-text-soft,#5C5148);margin-top:16px;max-width:62ch;}
+
+.drh .drh-link{font-size:15px;font-weight:700;display:inline-block;margin-top:22px;}
+.drh .drh-link-l{font-size:15px;font-weight:700;color:var(--dr-text-invert,#F2EAE0);}
+.drh .drh-link-l:hover{color:var(--dr-text-invert,#F2EAE0);text-decoration:underline;}
+.drh .drh-head-l{margin-top:0;}
+.drh .drh-center{text-align:center;margin-top:28px;}
+.drh-head{display:flex;align-items:flex-end;justify-content:space-between;gap:24px;margin-bottom:40px;}
+
+/* --- бутони --- */
+.drh-btn{
+  display:inline-block;font-size:15px;font-weight:700;line-height:1;
+  padding:17px 30px;border-radius:3px;border:1px solid transparent;
+  transition:background-color .18s ease,border-color .18s ease,transform .12s ease;
+}
+.drh .drh-btn:hover{text-decoration:none;}
+.drh-btn:active{transform:translateY(1px);}
+.drh .drh-btn-p{background:var(--dr-primary,#6B4A2F);color:#fff;}
+.drh .drh-btn-p:hover{background:var(--dr-primary-hover,#533A24);color:#fff;}
+.drh .drh-btn-g{background:transparent;color:var(--dr-text-invert,#F2EAE0);border-color:rgba(242,234,224,.65);}
+.drh .drh-btn-g:hover{border-color:var(--dr-text-invert,#F2EAE0);color:#fff;}
+.drh .drh-btn-s{background:var(--dr-primary-soft,#EFE6D8);color:var(--dr-primary-hover,#533A24);}
+.drh .drh-btn-s:hover{background:var(--dr-border,#E8DFD2);color:var(--dr-primary-hover,#533A24);}
+
+/* --- 1. hero --- */
+.drh-hero{position:relative;min-height:78vh;display:flex;align-items:center;overflow:hidden;background:var(--dr-text,#2B211A);}
+.drh-hero-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;}
+.drh-hero-scrim{
+  position:absolute;inset:0;
+  background:linear-gradient(90deg,rgba(22,15,10,.88) 0%,rgba(22,15,10,.66) 42%,rgba(22,15,10,.24) 72%,rgba(22,15,10,.08) 100%);
+}
+.drh-hero-in{position:relative;width:100%;padding-top:72px;padding-bottom:72px;}
+.drh-hair{display:block;width:72px;height:1px;background:var(--dr-gold,#C89B5E);margin:28px 0 18px;}
+.drh-hero-sub{font-size:17px;line-height:1.6;color:var(--dr-text-invert-soft,#C9BFB4);max-width:44ch;}
+.drh-hero-cta{display:flex;flex-wrap:wrap;gap:16px;margin-top:34px;}
+
+/* --- 2. лента на доверието --- */
+.drh-trust{background:var(--dr-surface-alt,#F3ECE0);}
+.drh-trust-l{display:grid;grid-template-columns:repeat(4,1fr);}
+.drh-trust-l li{display:flex;align-items:center;justify-content:center;gap:12px;padding:22px 16px;font-size:14px;font-weight:600;}
+.drh-trust-l li + li{border-left:1px solid var(--dr-border,#E8DFD2);}
+.drh-trust-l svg{width:22px;height:22px;flex:none;color:var(--dr-gold-deep,#A9762F);}
+.drh-trust-l a{color:var(--dr-text,#2B211A);}
+
+/* --- 3. какво изработваме --- */
+.drh-cats-g{display:grid;grid-template-columns:340px 1fr;gap:72px;align-items:center;}
+.drh-tiles{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
+.drh-tile{position:relative;display:block;aspect-ratio:4/3;overflow:hidden;border-radius:3px;background:var(--drh-ph);}
+.drh-tile img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;}
+.drh-tile::after{
+  content:"";position:absolute;left:0;right:0;bottom:0;height:38%;
+  background:linear-gradient(180deg,rgba(20,14,10,0) 0%,rgba(20,14,10,.78) 100%);
+}
+.drh .drh-tile:hover{text-decoration:none;}
+.drh-tile-n{position:absolute;left:14px;right:14px;bottom:12px;z-index:1;font-size:15px;font-weight:700;line-height:1.3;color:var(--dr-text-invert,#F2EAE0);}
+.drh-tile-tex{
+  position:absolute;inset:0;
+  background:url('/images/old-wooden-wall.jpg') center/cover no-repeat;
+  filter:saturate(.75) brightness(.55);
+}
+
+/* --- 4. най-популярни: карусел --- */
+.drh .drh-feat{background:var(--dr-surface-alt,#F3ECE0);overflow:hidden;}
+.drh .drh-car{position:relative;}
+.drh .drh-car-glow{
+  position:absolute;inset:0;pointer-events:none;
+  background:radial-gradient(48% 62% at 64% 46%,rgba(200,155,94,.34),rgba(200,155,94,0) 70%);
+}
+.drh .drh-car-stage{position:relative;height:clamp(420px,38vw,520px);}
+.drh .drh-car-list{
+  position:absolute;top:0;bottom:0;left:50%;transform:translateX(-50%);
+  width:min(1200px,100% - 64px);
+}
+.drh .drh-car-i{
+  position:absolute;top:0;left:0;width:70%;height:100%;
+  transition:transform .85s cubic-bezier(.22,.61,.36,1),filter .85s ease,opacity .85s ease;
+}
+.drh .drh-car-img{
+  position:absolute;right:0;top:50%;transform:translateY(-50%);
+  height:100%;width:auto;max-width:54%;object-fit:contain;
+}
+.drh .drh-car-txt{
+  position:absolute;left:0;top:50%;transform:translateY(-50%);
+  width:min(400px,46%);opacity:0;transition:opacity .35s ease;
+}
+.drh .drh-car-cat{font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--dr-accent,#8C5A28);margin:0 0 10px;}
+.drh .drh-car-name{
+  font-family:var(--dr-font-display,'Playfair Display',Georgia,serif);
+  font-weight:600;font-size:clamp(28px,3.2vw,42px);line-height:1.12;
+  color:var(--dr-text,#2B211A);margin:0;text-wrap:balance;
+}
+.drh .drh-car-des{font-size:15px;line-height:1.7;color:var(--dr-text-soft,#5C5148);margin:14px 0 0;max-width:34ch;}
+.drh .drh-car-price{
+  font-size:22px;font-weight:800;color:var(--dr-text,#2B211A);
+  font-variant-numeric:tabular-nums;margin:18px 0 22px;
+}
+.drh .drh-car-cta{padding:15px 26px;}
+
+/* стек: 2-рият е активният */
+.drh .drh-car-i:nth-child(1){transform:translateX(-14%) scale(1.1);filter:blur(12px);opacity:0;z-index:11;}
+.drh .drh-car-i:nth-child(2){transform:translateX(0) scale(1);filter:none;opacity:1;z-index:10;}
+.drh .drh-car-i:nth-child(3){transform:translate(52%,8%) scale(.76);filter:blur(5px);opacity:1;z-index:9;}
+.drh .drh-car-i:nth-child(4){transform:translate(88%,16%) scale(.48);filter:blur(10px);opacity:.85;z-index:8;}
+.drh .drh-car-i:nth-child(5){transform:translate(112%,24%) scale(.3);filter:blur(14px);opacity:0;z-index:7;}
+.drh .drh-car-i:nth-child(n+6){opacity:0;}
+.drh .drh-car-i:nth-child(2) .drh-car-txt{opacity:1;}
+.drh .drh-car-i[inert],.drh .drh-car-i[aria-hidden="true"]{pointer-events:none;}
+
+@media (prefers-reduced-motion:no-preference){
+  .drh .drh-car-i:nth-child(2) .drh-car-cat{animation:drhCarIn .45s .30s ease-out backwards;}
+  .drh .drh-car-i:nth-child(2) .drh-car-name{animation:drhCarIn .45s .38s ease-out backwards;}
+  .drh .drh-car-i:nth-child(2) .drh-car-des{animation:drhCarIn .45s .46s ease-out backwards;}
+  .drh .drh-car-i:nth-child(2) .drh-car-price{animation:drhCarIn .45s .54s ease-out backwards;}
+  .drh .drh-car-i:nth-child(2) .drh-car-cta{animation:drhCarIn .45s .62s ease-out backwards;}
+}
+@keyframes drhCarIn{from{transform:translateY(26px);opacity:0;}to{transform:translateY(0);opacity:1;}}
+
+/* навигация */
+.drh .drh-car-nav{
+  position:relative;display:flex;align-items:center;justify-content:space-between;
+  gap:20px;margin-top:26px;
+}
+.drh .drh-car-count{font-size:14px;font-weight:700;color:var(--dr-text-muted,#6E6257);font-variant-numeric:tabular-nums;margin:0;}
+.drh .drh-car-btns{display:flex;gap:12px;}
+.drh .drh-car-b{
+  display:flex;align-items:center;justify-content:center;width:48px;height:48px;
+  padding:0;border-radius:50%;cursor:pointer;
+  background:transparent;border:1px solid var(--dr-border-input,#8D7B63);
+  color:var(--dr-text,#2B211A);
+  transition:background-color .18s ease,border-color .18s ease,color .18s ease;
+}
+.drh .drh-car-b:hover{background:var(--dr-primary,#6B4A2F);border-color:var(--dr-primary,#6B4A2F);color:#fff;}
+.drh .drh-car-b svg{width:20px;height:20px;}
+.drh .drh-sr{
+  position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;
+  clip-path:inset(50%);white-space:nowrap;border:0;
+}
+
+/* --- 5. по ваша идея --- */
+.drh-custom{background:var(--dr-surface-warm,#F4E7D4);}
+.drh-custom-g{display:grid;grid-template-columns:380px 1fr;gap:72px;align-items:center;}
+.drh-custom-img{width:100%;aspect-ratio:1/1;object-fit:cover;border-radius:3px;}
+.drh-steps{display:grid;grid-template-columns:repeat(3,1fr);gap:36px;margin:40px 0;}
+.drh-sn{
+  display:block;font-family:var(--dr-font-display,'Playfair Display',Georgia,serif);
+  font-size:44px;font-weight:600;line-height:1;color:var(--dr-gold-deep,#A9762F);
+  font-variant-numeric:tabular-nums;
+}
+.drh-st{display:block;font-size:16px;font-weight:700;margin:12px 0 6px;}
+.drh-sx{display:block;font-size:14px;line-height:1.6;color:var(--dr-text-soft,#5C5148);}
+
+/* --- 6. за майстора --- */
+.drh-craft-g{display:grid;grid-template-columns:1fr 460px;gap:72px;align-items:center;}
+.drh-craft-img{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:3px;}
+
+/* --- 7. галерия --- */
+.drh-gal{background:var(--dr-surface-ink,#1C1714);}
+.drh-mos{display:grid;grid-template-columns:1.4fr 1fr 1fr;grid-auto-rows:210px;gap:12px;}
+.drh-m{margin:0;overflow:hidden;border-radius:2px;background:#4E4943;}
+.drh-m img{width:100%;height:100%;object-fit:cover;}
+.drh-m-big{grid-row:span 2;}
+
+/* --- 8. статии --- */
+.drh-art-g{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;}
+.drh-art{display:block;}
+.drh .drh-art:hover{text-decoration:none;}
+.drh-art-img{display:block;overflow:hidden;border-radius:3px;background:var(--drh-ph);}
+.drh-art-img img{width:100%;aspect-ratio:16/9;object-fit:cover;}
+.drh-art-d{display:block;font-size:12px;color:var(--dr-text-muted,#6E6257);margin:16px 0 8px;}
+.drh-art-r{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;}
+.drh-art-t{font-size:16.5px;font-weight:700;line-height:1.4;color:var(--dr-text,#2B211A);max-width:30ch;}
+
+/* --- 9. FAQ (нула JS) --- */
+.drh-faq{background:var(--dr-surface-alt,#F3ECE0);}
+.drh-faq-t{text-align:center;}
+.drh-faq-l{max-width:760px;margin:44px auto 0;}
+.drh-faq-i{border-bottom:1px solid var(--dr-border,#E8DFD2);}
+.drh-faq-q{
+  display:flex;align-items:center;justify-content:space-between;gap:20px;
+  padding:20px 0;cursor:pointer;list-style:none;
+  font-size:16px;font-weight:600;color:var(--dr-text,#2B211A);
+}
+.drh-faq-q::-webkit-details-marker{display:none;}
+.drh-faq-i[open] .drh-faq-q{font-weight:700;padding-bottom:12px;}
+.drh-faq-s{position:relative;width:18px;height:18px;flex:none;transition:transform .18s ease;}
+.drh-faq-s::before,.drh-faq-s::after{
+  content:"";position:absolute;top:50%;left:50%;translate:-50% -50%;
+  background:var(--dr-gold-deep,#A9762F);
+}
+.drh-faq-s::before{width:16px;height:2px;}
+.drh-faq-s::after{width:2px;height:16px;}
+.drh-faq-i[open] .drh-faq-s{transform:rotate(45deg);}
+.drh-faq-a p{font-size:15px;line-height:1.7;color:var(--dr-text-soft,#5C5148);padding-bottom:22px;max-width:64ch;margin:0;}
+
+/* --- 10. финален CTA --- */
+.drh-cta{position:relative;overflow:hidden;text-align:center;background:var(--dr-surface-ink,#1C1714);}
+.drh-cta-tex{
+  position:absolute;inset:0;opacity:.09;
+  background:url('/images/old-wooden-wall.jpg') center/cover no-repeat;
+}
+.drh-cta-in{position:relative;padding-top:104px;padding-bottom:104px;}
+.drh-cta-p{font-size:16px;color:var(--dr-text-invert-soft,#C9BFB4);margin-top:18px;}
+.drh-cta-c{display:flex;flex-wrap:wrap;justify-content:center;gap:48px;margin:32px 0 36px;}
+.drh-cta-c a{font-size:24px;font-weight:700;color:var(--dr-text-invert,#F2EAE0);}
+.drh-cta-c a:hover{color:#fff;}
+
+/* --- под сгъвката: по-евтин първи paint --- */
+.drh-gal,.drh-arts,.drh-faq,.drh-cta{
+  content-visibility:auto;contain-intrinsic-size:auto 620px;
+}
+
+/* =====================  таблет  ===================== */
+@media (max-width:1024px){
+  .drh-wrap{padding:0 24px;}
+  .drh-s{padding:72px 0;}
+  .drh-cats-g,.drh-custom-g,.drh-craft-g{grid-template-columns:1fr;gap:40px;}
+  .drh-craft-img{order:2;}
+  .drh .drh-car-i{width:80%;}
+  .drh .drh-car-i:nth-child(3){transform:translate(46%,8%) scale(.7);filter:blur(4px);}
+  .drh .drh-car-i:nth-child(4){transform:translate(78%,16%) scale(.44);filter:blur(8px);}
+  .drh .drh-car-txt{width:min(340px,48%);}
+  .drh-mos{grid-template-columns:1fr 1fr;grid-auto-rows:180px;}
+  .drh-m-big{grid-row:auto;grid-column:span 2;}
+}
+
+/* =====================  мобилно  ===================== */
+@media (max-width:767px){
+  .drh-wrap{padding:0 20px;}
+  .drh-s{padding:64px 0;}
+  .drh .drh-only-m{display:block;}
+  .drh .drh-hide-m{display:none;}
+
+  .drh-hero{min-height:72vh;text-align:center;}
+  .drh-hero-scrim{background:linear-gradient(180deg,rgba(22,15,10,.62) 0%,rgba(22,15,10,.80) 100%);}
+  .drh-hero-in{padding-top:56px;padding-bottom:56px;}
+  .drh-h1{max-width:none;}
+  .drh-hair{margin:22px auto 16px;}
+  .drh-hero-sub{font-size:15px;max-width:none;}
+  .drh-hero-cta{flex-direction:column;margin-top:28px;}
+  .drh-hero-cta .drh-btn{width:100%;text-align:center;}
+
+  .drh-trust-l{grid-template-columns:1fr 1fr;}
+  .drh-trust-l li{padding:16px 14px;font-size:12.5px;gap:10px;}
+  .drh-trust-l li + li{border-left:0;}
+  .drh-trust-l li:nth-child(odd){border-right:1px solid var(--dr-border,#E8DFD2);}
+  .drh-trust-l li:nth-child(1),.drh-trust-l li:nth-child(2){border-bottom:1px solid var(--dr-border,#E8DFD2);}
+  .drh-trust-l svg{width:19px;height:19px;}
+
+  .drh-head{flex-direction:column;align-items:flex-start;gap:12px;margin-bottom:24px;}
+  .drh .drh-head .drh-head-l{display:none;}
+
+  .drh-tiles{grid-template-columns:1fr 1fr;gap:12px;}
+  .drh-tile-n{font-size:12.5px;left:10px;right:10px;bottom:9px;}
+
+  /* карусел: снимка отгоре, текст отдолу, нула blur */
+  .drh .drh-car-stage{height:600px;}
+  .drh .drh-car-list{width:calc(100% - 40px);}
+  .drh .drh-car-i{width:100%;filter:none !important;}
+  .drh .drh-car-img{
+    position:absolute;top:0;left:50%;right:auto;
+    transform:translateX(-50%);height:56%;max-width:none;
+  }
+  .drh .drh-car-txt{
+    position:absolute;top:58%;left:0;right:0;bottom:0;
+    width:auto;transform:none;text-align:center;
+  }
+  .drh .drh-car-des{margin-left:auto;margin-right:auto;font-size:14px;}
+  .drh .drh-car-name{font-size:26px;}
+  .drh .drh-car-price{font-size:19px;margin:14px 0 18px;}
+  .drh .drh-car-i:nth-child(1){transform:translateX(-30%) scale(1);opacity:0;}
+  .drh .drh-car-i:nth-child(2){transform:translateX(0) scale(1);opacity:1;}
+  .drh .drh-car-i:nth-child(3){transform:translate(72%,4%) scale(.7);opacity:.4;}
+  .drh .drh-car-i:nth-child(n+4){opacity:0;}
+  .drh .drh-car-nav{margin-top:18px;}
+  .drh .drh-car-b{width:44px;height:44px;}
+  .drh .drh-btn-s{display:block;width:100%;text-align:center;margin-top:24px;}
+
+  .drh-custom-img{aspect-ratio:4/3;}
+  .drh-steps{grid-template-columns:1fr;gap:22px;margin:28px 0;}
+  .drh-steps li{display:grid;grid-template-columns:auto 1fr;column-gap:18px;}
+  .drh-sn{grid-row:span 2;font-size:36px;}
+  .drh-st{margin:0 0 4px;}
+
+  .drh-craft-img{order:0;}
+  .drh-mos{grid-template-columns:1fr 1fr;grid-auto-rows:130px;gap:10px;}
+  .drh-art-g{grid-template-columns:1fr;gap:28px;}
+  .drh-art-t{font-size:15px;max-width:none;}
+
+  .drh-faq-q{font-size:14.5px;padding:16px 0;}
+  .drh-faq-a p{font-size:13.5px;padding-bottom:16px;}
+
+  .drh-cta-in{padding-top:72px;padding-bottom:72px;}
+  .drh-cta-c{flex-direction:column;gap:12px;margin:26px 0 30px;}
+  .drh-cta-c a{font-size:19px;}
+  .drh-cta .drh-btn{display:block;}
+}
+
+@media (prefers-reduced-motion:reduce){
+  .drh *{transition:none !important;animation:none !important;}
+}
+
+/* --- пазач на специфичността: показване/скриване побеждава по ред --- */
+.drh .drh-only-m{display:none;}
+@media (max-width:767px){
+  .drh .drh-only-m{display:block;}
+  .drh .drh-hide-m{display:none;}
+}
