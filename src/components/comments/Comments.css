@@ -1,0 +1,139 @@
+/* ==========================================================================
+   Коментари (.cm-*) - под детайлите на изделие
+   --------------------------------------------------------------------------
+   <section className="cm">
+     <h2 className="cm-title">Коментари <span className="cm-count">{comments.length}</span></h2>
+
+     {user
+       ? <form className="cm-form" onSubmit={…}>
+           <textarea className="cm-input" value={text} onChange={…}
+                     placeholder="Напиши коментар…" rows="3" />
+           <button className="dr-btn dr-btn--sm" disabled={!text.trim()}>Публикувай</button>
+         </form>
+       : <p className="cm-login"><Link to="/login">Влез</Link>, за да коментираш.</p>}
+
+     {comments.length === 0
+       ? <p className="cm-empty">Още няма коментари. Бъди първият!</p>
+       : <ul className="cm-list">
+           {comments.map(c => (
+             <li key={c._id} className="cm-item">
+               <span className="cm-avatar" aria-hidden="true">{c.author[0]}</span>
+               <div className="cm-body">
+                 <p className="cm-head"><strong>{c.author}</strong> <time>{c.date}</time></p>
+                 <p className="cm-text">{c.text}</p>
+               </div>
+             </li>
+           ))}
+         </ul>}
+   </section>
+   ========================================================================== */
+
+.cm {
+  max-width: var(--dr-container-narrow);
+  margin-top: var(--dr-sp-xl);
+  padding-top: var(--dr-sp-lg);
+  border-top: 1px solid var(--dr-border);
+}
+.cm-title {
+  display: flex;
+  align-items: center;
+  gap: var(--dr-sp-2xs);
+  margin-bottom: var(--dr-sp-md);
+  font-size: var(--dr-fs-h3);
+}
+.cm-count {
+  padding: .15em .6em;
+  font-family: var(--dr-font-body);
+  font-size: var(--dr-fs-xs);
+  font-weight: 700;
+  color: var(--dr-primary-hover);
+  background: var(--dr-primary-soft);
+  border-radius: var(--dr-radius-pill);
+}
+
+/* --- Нов коментар ------------------------------------------------------- */
+.cm-form {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: var(--dr-sp-xs);
+  margin-bottom: var(--dr-sp-lg);
+}
+.cm-input {
+  width: 100%;
+  min-height: 96px;
+  padding: .8em .95em;
+  font: inherit;
+  font-size: var(--dr-fs-sm);
+  color: var(--dr-text);
+  background: var(--dr-surface);
+  border: 1.5px solid var(--dr-border-input);
+  border-radius: var(--dr-radius-sm);
+  resize: vertical;
+}
+.cm-input:focus-visible {
+  outline: none;
+  border-color: var(--dr-primary);
+  box-shadow: 0 0 0 3px rgba(140, 90, 40, .22);
+}
+.cm-login,
+.cm-empty {
+  margin: 0 0 var(--dr-sp-md);
+  padding: var(--dr-sp-sm) var(--dr-sp-md);
+  font-size: var(--dr-fs-sm);
+  color: var(--dr-text-soft);
+  background: var(--dr-surface-alt);
+  border-radius: var(--dr-radius-sm);
+}
+.cm-login a { color: var(--dr-primary); font-weight: 700; }
+
+/* --- Списък ------------------------------------------------------------- */
+.cm-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--dr-sp-sm);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.cm-item {
+  display: flex;
+  gap: var(--dr-sp-sm);
+  padding: var(--dr-sp-sm);
+  background: var(--dr-surface);
+  border: 1px solid var(--dr-border);
+  border-radius: var(--dr-radius);
+  animation: cm-in 240ms ease-out;   /* нов коментар „влиза" плавно */
+}
+@keyframes cm-in { from { opacity: 0; transform: translateY(-4px); } }
+
+.cm-avatar {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 40px; height: 40px;
+  font-family: var(--dr-font-head);
+  font-size: 18px;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--dr-on-primary);
+  background: var(--dr-accent);
+  border-radius: 50%;
+}
+.cm-body { min-width: 0; }
+.cm-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: .25em .6em;
+  margin: 0;
+  font-size: var(--dr-fs-sm);
+}
+.cm-head time { font-size: var(--dr-fs-2xs); color: var(--dr-text-muted); }
+.cm-text {
+  margin: .25em 0 0;
+  font-size: var(--dr-fs-sm);
+  line-height: 1.6;
+  color: var(--dr-text-soft);
+  overflow-wrap: anywhere;
+}

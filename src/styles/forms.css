@@ -1,0 +1,184 @@
+/* ==========================================================================
+   7 · ФОРМИ - Login, Register, Create, Edit
+   --------------------------------------------------------------------------
+   Една и съща визия за всички форми. Пример (Login):
+
+   <section className="dr-form-card">
+     <h1>Вход</h1>
+     <p className="dr-form-sub">Влез, за да добавяш изделия.</p>
+
+     <form className="dr-form" onSubmit={submitHandler} noValidate>
+       <div className={`dr-field ${errors.email ? 'has-error' : ''}`}>
+         <label htmlFor="email">Имейл</label>
+         <input id="email" name="email" type="email"
+                value={values.email} onChange={changeHandler}
+                aria-invalid={!!errors.email} />
+         {errors.email && <p className="dr-field-error">{errors.email}</p>}
+       </div>
+       …
+       <button className="dr-btn dr-btn--block" disabled={isPending}>Вход</button>
+     </form>
+
+     <p className="dr-form-alt">Нямаш профил? <Link to="/register">Регистрация</Link></p>
+   </section>
+
+   За Create/Edit, които са по-широки: <section className="dr-form-card dr-form-card--wide">
+   ========================================================================== */
+
+/* --- 7.1 Карта около формата -------------------------------------------- */
+.dr-form-card {
+  width: 100%;
+  max-width: 460px;
+  margin-inline: auto;
+  padding: var(--dr-sp-lg);
+  background: var(--dr-surface);
+  border: 1px solid var(--dr-border);
+  border-radius: var(--dr-radius);
+  box-shadow: var(--dr-shadow-md);
+  position: relative;
+}
+/* тънка златна черта отгоре - същият мотив като орнаментите на сайта */
+.dr-form-card::before {
+  content: "";
+  position: absolute;
+  top: 0; left: var(--dr-sp-lg); right: var(--dr-sp-lg);
+  height: 3px;
+  background: linear-gradient(90deg, transparent, var(--dr-gold), transparent);
+  border-radius: 0 0 3px 3px;
+}
+.dr-form-card--wide { max-width: var(--dr-container-narrow); }
+
+.dr-form-card h1 { font-size: var(--dr-fs-h2); text-align: center; }
+.dr-form-sub {
+  margin: var(--dr-sp-2xs) 0 var(--dr-sp-md);
+  text-align: center;
+  font-size: var(--dr-fs-sm);
+  color: var(--dr-text-soft);
+}
+
+/* --- 7.2 Форма + полета ------------------------------------------------- */
+.dr-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--dr-sp-md);
+}
+/* две полета на един ред (напр. Цена · Категория) - на мобилно едно под друго */
+.dr-form-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: var(--dr-sp-md);
+}
+
+.dr-field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--dr-sp-3xs);
+}
+.dr-field label {
+  font-size: var(--dr-fs-sm);
+  font-weight: 600;
+  color: var(--dr-text);
+}
+.dr-field-hint {
+  margin: 0;
+  font-size: var(--dr-fs-xs);
+  color: var(--dr-text-muted);
+}
+
+.dr-field input,
+.dr-field select,
+.dr-field textarea {
+  width: 100%;
+  padding: .75em .9em;
+  font: inherit;
+  font-size: var(--dr-fs-sm);
+  line-height: 1.4;
+  color: var(--dr-text);
+  background: var(--dr-paper);
+  border: 1.5px solid var(--dr-border-input);
+  border-radius: var(--dr-radius-sm);
+  transition: border-color var(--dr-transition), box-shadow var(--dr-transition),
+              background var(--dr-transition);
+}
+.dr-field textarea { min-height: 140px; resize: vertical; }
+.dr-field select {
+  appearance: none;
+  padding-right: 2.4em;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%236B4A2F' stroke-width='2' stroke-linecap='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right .8em center;
+  background-size: 16px;
+}
+
+.dr-field input:hover,
+.dr-field select:hover,
+.dr-field textarea:hover { border-color: var(--dr-primary); }
+
+/* фокус: мек пръстен вместо глобалния outline - изглежда по-добре в полета */
+.dr-field input:focus-visible,
+.dr-field select:focus-visible,
+.dr-field textarea:focus-visible {
+  outline: none;
+  background: var(--dr-surface);
+  border-color: var(--dr-primary);
+  box-shadow: 0 0 0 3px rgba(140, 90, 40, .22);
+}
+
+/* --- 7.3 Грешка в поле -------------------------------------------------- *
+ * Слагаш className "has-error" на .dr-field + <p className="dr-field-error"> *
+ * ---------------------------------------------------------------------- */
+.dr-field.has-error input,
+.dr-field.has-error select,
+.dr-field.has-error textarea { border-color: var(--dr-danger); background: #FDF6F5; }
+.dr-field.has-error input:focus-visible,
+.dr-field.has-error textarea:focus-visible { box-shadow: 0 0 0 3px rgba(163, 46, 34, .18); }
+
+.dr-field-error {
+  display: flex;
+  align-items: center;
+  gap: .4em;
+  margin: 0;
+  font-size: var(--dr-fs-xs);
+  font-weight: 600;
+  color: var(--dr-danger);
+}
+.dr-field-error::before {
+  content: "!";
+  display: inline-grid;
+  place-items: center;
+  flex: none;
+  width: 16px; height: 16px;
+  font-size: 11px;
+  color: #fff;
+  background: var(--dr-danger);
+  border-radius: 50%;
+}
+
+/* --- 7.4 Преглед на снимката (Create/Edit с imageUrl поле) -------------- */
+.dr-img-preview {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  background: var(--dr-surface-alt);
+  border: 1px solid var(--dr-border);
+  border-radius: var(--dr-radius-sm);
+}
+
+/* --- 7.5 Долна част на формата ------------------------------------------ */
+.dr-form-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--dr-sp-xs);
+  justify-content: flex-end;
+  padding-top: var(--dr-sp-xs);
+}
+.dr-form-alt {
+  margin: var(--dr-sp-md) 0 0;
+  padding-top: var(--dr-sp-md);
+  text-align: center;
+  font-size: var(--dr-fs-sm);
+  color: var(--dr-text-soft);
+  border-top: 1px solid var(--dr-border);
+}
+.dr-form-alt a { color: var(--dr-primary); font-weight: 700; }
+.dr-form-alt a:hover { color: var(--dr-primary-hover); }

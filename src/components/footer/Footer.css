@@ -1,0 +1,89 @@
+/* ==========================================================================
+   Footer (.df-*) - тъмната „мастилена" лента на darvorezbi.com
+   --------------------------------------------------------------------------
+   <footer className="df">
+     <div className="dr-container df-top">
+       <div className="df-brand">
+         <Link to="/" className="df-logo">ДЪРВОРЕЗБИ</Link>
+         <p>Ръчно изработени дърворезби …</p>
+       </div>
+       <nav className="df-col" aria-label="Навигация">
+         <h2 className="df-h">Разгледай</h2>
+         <ul><li><Link to="/catalog">Каталог</Link></li> …</ul>
+       </nav>
+       <div className="df-col">
+         <h2 className="df-h">Контакти</h2>
+         <ul><li><a href="tel:…">…</a></li> …</ul>
+       </div>
+     </div>
+     <div className="df-bottom">
+       <div className="dr-container">© 2026 Дърворезби · SoftUni React проект</div>
+     </div>
+   </footer>
+   ========================================================================== */
+
+.df {
+  margin-top: auto;
+  color: var(--dr-text-invert-soft);
+  background: var(--dr-surface-ink);
+  font-size: var(--dr-fs-sm);
+  position: relative;
+}
+/* тънък златен ръб между съдържанието и футъра */
+.df::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--dr-gold) 20%, var(--dr-gold) 80%, transparent);
+  opacity: .7;
+}
+
+.df-top {
+  display: grid;
+  grid-template-columns: 1.6fr 1fr 1fr;
+  gap: var(--dr-sp-xl);
+  padding-block: var(--dr-sp-xl);
+}
+
+.df-logo {
+  display: inline-block;
+  font: 600 22px/1 var(--dr-font-display);
+  letter-spacing: .17em;
+  color: var(--dr-text-invert);
+  text-decoration: none;
+}
+.df-brand p { margin: var(--dr-sp-sm) 0 0; max-width: 38ch; line-height: var(--dr-lh-body); }
+
+.df-h {
+  margin: 0 0 var(--dr-sp-sm);
+  font-family: var(--dr-font-body);
+  font-size: var(--dr-fs-2xs);
+  font-weight: 700;
+  letter-spacing: var(--dr-ls-kicker);
+  text-transform: uppercase;
+  color: var(--dr-gold);
+}
+.df-col ul {
+  display: flex;
+  flex-direction: column;
+  gap: var(--dr-sp-2xs);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.df a { color: var(--dr-text-invert-soft); text-decoration: none; transition: color var(--dr-transition); }
+.df a:hover { color: var(--dr-text-invert); }
+.df :focus-visible { outline-color: var(--dr-paper); }   /* светъл ринг върху тъмно */
+
+.df-bottom {
+  padding-block: var(--dr-sp-sm);
+  font-size: var(--dr-fs-xs);
+  color: var(--dr-text-invert-soft);
+  border-top: 1px solid rgba(242, 234, 224, .12);
+}
+
+@media (max-width: 767px) {
+  .df-top { grid-template-columns: 1fr 1fr; gap: var(--dr-sp-lg); }
+  .df-brand { grid-column: 1 / -1; }
+}

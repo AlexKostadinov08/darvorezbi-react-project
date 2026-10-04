@@ -1,0 +1,279 @@
+/* ==========================================================================
+   6 · ОБЩИ UI ЕЛЕМЕНТИ - ползват се на всяка страница
+   --------------------------------------------------------------------------
+   Контейнер, заглавие на страница, бутони, съобщения, зареждане,
+   празно състояние, 404 и модален прозорец за потвърждение.
+   Префикс .dr-* → глобални, ползваш ги навсякъде.
+   ========================================================================== */
+
+/* --- 6.1 Обвивка на приложението, контейнер, страница ------------------- *
+ * Layout:  <div className="dr-app"> <Header/> <main className="dr-page">  *
+ *          <Outlet/> </main> <Footer/> </div>                             *
+ * .dr-app държи футъра долу, дори когато страницата е почти празна.      *
+ * Вътре: <div className="dr-container"> … </div>                           *
+ * ---------------------------------------------------------------------- */
+.dr-app {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  min-height: 100dvh;
+}
+
+.dr-container {
+  width: 100%;
+  max-width: var(--dr-container);
+  margin-inline: auto;
+  padding-inline: var(--dr-gutter);
+}
+.dr-container--narrow { max-width: var(--dr-container-narrow); }
+
+.dr-page {
+  flex: 1;                           /* заема мястото между хедъра и футъра */
+  padding-block: var(--dr-sp-xl) var(--dr-sp-2xl);
+}
+/* Началната страница си има собствени отстояния (.drh) */
+.dr-page:has(> .drh) { padding-block: 0; }
+
+/* --- 6.2 Заглавие на страница ------------------------------------------- *
+ * <header className="dr-page-head">                                       *
+ *   <p className="dr-kicker">Каталог</p>                                  *
+ *   <h1>Всички изделия</h1>                                               *
+ *   <p className="dr-lede">Кратко изречение…</p>                          *
+ * </header>                                                               *
+ * ---------------------------------------------------------------------- */
+.dr-page-head {
+  margin-bottom: var(--dr-sp-lg);
+  max-width: var(--dr-measure);
+}
+.dr-page-head h1 { font-size: var(--dr-fs-h1); }
+.dr-kicker {
+  margin: 0 0 var(--dr-sp-2xs);
+  font-size: var(--dr-fs-2xs);
+  font-weight: 700;
+  letter-spacing: var(--dr-ls-kicker);
+  text-transform: uppercase;
+  color: var(--dr-accent);
+}
+.dr-lede {
+  margin-top: var(--dr-sp-xs);
+  font-size: var(--dr-fs-md);
+  line-height: var(--dr-lh-snug);
+  color: var(--dr-text-soft);
+}
+
+/* --- 6.3 Бутони --------------------------------------------------------- *
+ * Работят еднакво на <button> и на <Link>:                                *
+ *   .dr-btn                 основен (орех)                                *
+ *   .dr-btn dr-btn--soft    вторичен (светъл фон)                         *
+ *   .dr-btn dr-btn--ghost   само рамка                                    *
+ *   .dr-btn dr-btn--danger  изтриване                                     *
+ *   + dr-btn--sm / dr-btn--block                                          *
+ * ---------------------------------------------------------------------- */
+.dr-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: .5em;
+  padding: .8em 1.6em;
+  font-family: var(--dr-font-body);
+  font-size: var(--dr-fs-sm);
+  font-weight: 700;
+  line-height: 1.2;
+  text-decoration: none;
+  white-space: nowrap;
+  color: var(--dr-on-primary);
+  background: var(--dr-primary);
+  border: 1.5px solid transparent;
+  border-radius: var(--dr-radius-sm);
+  cursor: pointer;
+  transition: background var(--dr-transition), color var(--dr-transition),
+              border-color var(--dr-transition), transform var(--dr-transition);
+}
+.dr-btn:hover  { background: var(--dr-primary-hover); color: var(--dr-on-primary); }
+.dr-btn:active { transform: translateY(1px); }
+
+.dr-btn--soft        { background: var(--dr-primary-soft); color: var(--dr-primary-hover); }
+.dr-btn--soft:hover  { background: var(--dr-surface-warm); color: var(--dr-primary-hover); }
+.dr-btn--ghost       { background: transparent; color: var(--dr-primary); border-color: var(--dr-border-input); }
+.dr-btn--ghost:hover { background: var(--dr-surface-alt); color: var(--dr-primary-hover); border-color: var(--dr-primary); }
+.dr-btn--danger       { background: transparent; color: var(--dr-danger); border-color: currentColor; }
+.dr-btn--danger:hover { background: var(--dr-danger); color: #fff; border-color: var(--dr-danger); }
+
+.dr-btn--sm    { padding: .55em 1.1em; font-size: var(--dr-fs-xs); }
+.dr-btn--block { width: 100%; }
+
+/* Докато заявката тече: <button disabled> */
+.dr-btn:disabled,
+.dr-btn[aria-disabled="true"] {
+  opacity: .55;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Ред от бутони - напр. „Редактирай · Изтрий" при автора */
+.dr-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--dr-sp-xs);
+  align-items: center;
+}
+
+/* --- 6.4 Съобщения (грешка от API, успех) ------------------------------- *
+ * <div className="dr-alert dr-alert--error" role="alert">                 *
+ *   <strong>Нещо се обърка.</strong> Опитай отново.                        *
+ * </div>                                                                  *
+ * ---------------------------------------------------------------------- */
+.dr-alert {
+  display: flex;
+  gap: var(--dr-sp-xs);
+  align-items: flex-start;
+  padding: var(--dr-sp-sm) var(--dr-sp-md);
+  margin-block: var(--dr-sp-md);
+  font-size: var(--dr-fs-sm);
+  line-height: var(--dr-lh-snug);
+  color: var(--dr-text);
+  background: var(--dr-surface-alt);
+  border-left: 4px solid var(--dr-accent);
+  border-radius: var(--dr-radius-sm);
+}
+.dr-alert--error   { background: #F8E8E5; border-left-color: var(--dr-danger);  color: #6E1F17; }
+.dr-alert--success { background: #E7EFE6; border-left-color: var(--dr-success); color: #2A4A2E; }
+.dr-alert .dr-btn  { margin-left: auto; flex: none; }   /* бутон „Опитай пак" вдясно */
+
+/* --- 6.5 Зареждане ------------------------------------------------------ *
+ * <div className="dr-loader" role="status">                               *
+ *   <span className="dr-spinner" aria-hidden="true"></span>               *
+ *   <span>Зареждане…</span>                                               *
+ * </div>                                                                  *
+ * ---------------------------------------------------------------------- */
+.dr-loader {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--dr-sp-sm);
+  padding-block: var(--dr-sp-2xl);
+  font-size: var(--dr-fs-sm);
+  color: var(--dr-text-muted);
+}
+.dr-spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid var(--dr-border);
+  border-top-color: var(--dr-primary);
+  border-radius: 50%;
+  animation: dr-spin .8s linear infinite;
+}
+.dr-spinner--sm { width: 18px; height: 18px; border-width: 2px; }  /* вътре в бутон */
+@keyframes dr-spin { to { transform: rotate(360deg); } }
+
+/* Скелет на карта докато се зарежда каталогът (по желание) */
+.dr-skeleton {
+  background: linear-gradient(90deg, var(--dr-surface-alt) 25%, var(--dr-surface-warm) 50%, var(--dr-surface-alt) 75%);
+  background-size: 200% 100%;
+  animation: dr-shimmer 1.4s ease-in-out infinite;
+  border-radius: var(--dr-radius-sm);
+}
+@keyframes dr-shimmer { to { background-position: -200% 0; } }
+
+/* --- 6.6 Празно състояние ----------------------------------------------- *
+ * <div className="dr-empty">                                              *
+ *   <span className="dr-empty-mark" aria-hidden="true"></span>            *
+ *   <h2>Още няма изделия</h2>                                             *
+ *   <p>Бъди първият, който добави.</p>                                    *
+ *   <Link className="dr-btn" to="/create">Добави изделие</Link>           *
+ * </div>                                                                  *
+ * ---------------------------------------------------------------------- */
+.dr-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--dr-sp-xs);
+  padding: var(--dr-sp-xl) var(--dr-sp-md);
+  text-align: center;
+  background: var(--dr-surface);
+  border: 1px dashed var(--dr-border-input);
+  border-radius: var(--dr-radius);
+}
+.dr-empty h2 { font-size: var(--dr-fs-h3); }
+.dr-empty p  { margin: 0 0 var(--dr-sp-xs); color: var(--dr-text-soft); max-width: 44ch; }
+
+/* Резбована розета - същата като в хедъра, само по-голяма и в злато */
+.dr-empty-mark,
+.dr-notfound-mark {
+  display: block;
+  width: 56px;
+  height: 56px;
+  background: var(--dr-gold);
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Cg fill='%23000'%3E%3Cellipse cx='20' cy='9.5' rx='3.1' ry='7'/%3E%3Cellipse cx='20' cy='9.5' rx='3.1' ry='7' transform='rotate(45 20 20)'/%3E%3Cellipse cx='20' cy='9.5' rx='3.1' ry='7' transform='rotate(90 20 20)'/%3E%3Cellipse cx='20' cy='9.5' rx='3.1' ry='7' transform='rotate(135 20 20)'/%3E%3Cellipse cx='20' cy='9.5' rx='3.1' ry='7' transform='rotate(180 20 20)'/%3E%3Cellipse cx='20' cy='9.5' rx='3.1' ry='7' transform='rotate(225 20 20)'/%3E%3Cellipse cx='20' cy='9.5' rx='3.1' ry='7' transform='rotate(270 20 20)'/%3E%3Cellipse cx='20' cy='9.5' rx='3.1' ry='7' transform='rotate(315 20 20)'/%3E%3C/g%3E%3Ccircle cx='20' cy='20' r='5.4' fill='none' stroke='%23000' stroke-width='1.5'/%3E%3Ccircle cx='20' cy='20' r='2.1'/%3E%3C/svg%3E") center/contain no-repeat;
+          mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Cg fill='%23000'%3E%3Cellipse cx='20' cy='9.5' rx='3.1' ry='7'/%3E%3Cellipse cx='20' cy='9.5' rx='3.1' ry='7' transform='rotate(45 20 20)'/%3E%3Cellipse cx='20' cy='9.5' rx='3.1' ry='7' transform='rotate(90 20 20)'/%3E%3Cellipse cx='20' cy='9.5' rx='3.1' ry='7' transform='rotate(135 20 20)'/%3E%3Cellipse cx='20' cy='9.5' rx='3.1' ry='7' transform='rotate(180 20 20)'/%3E%3Cellipse cx='20' cy='9.5' rx='3.1' ry='7' transform='rotate(225 20 20)'/%3E%3Cellipse cx='20' cy='9.5' rx='3.1' ry='7' transform='rotate(270 20 20)'/%3E%3Cellipse cx='20' cy='9.5' rx='3.1' ry='7' transform='rotate(315 20 20)'/%3E%3C/g%3E%3Ccircle cx='20' cy='20' r='5.4' fill='none' stroke='%23000' stroke-width='1.5'/%3E%3Ccircle cx='20' cy='20' r='2.1'/%3E%3C/svg%3E") center/contain no-repeat;
+}
+
+/* --- 6.7 404 ------------------------------------------------------------ *
+ * <section className="dr-notfound">                                       *
+ *   <span className="dr-notfound-mark" aria-hidden="true"></span>         *
+ *   <p className="dr-notfound-code">404</p>                               *
+ *   <h1>Тази страница не е издялана още</h1>                              *
+ *   <p>…</p>                                                              *
+ *   <Link className="dr-btn" to="/">Към началото</Link>                   *
+ * </section>                                                              *
+ * ---------------------------------------------------------------------- */
+.dr-notfound {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--dr-sp-sm);
+  max-width: 560px;
+  margin-inline: auto;
+  padding-block: var(--dr-sp-xl);
+  text-align: center;
+}
+.dr-notfound-mark { width: 72px; height: 72px; }
+.dr-notfound .dr-notfound-code {
+  margin: 0;
+  font-family: var(--dr-font-head);
+  font-size: clamp(4.5rem, 3rem + 7vw, 8rem);
+  font-weight: 700;
+  line-height: 1;
+  color: var(--dr-primary-soft);
+  -webkit-text-stroke: 1.5px var(--dr-primary);
+}
+.dr-notfound h1 { font-size: var(--dr-fs-h2); }
+.dr-notfound p  { margin: 0; color: var(--dr-text-soft); }
+/* (.dr-notfound .dr-notfound-code е по-специфичен → печели над горното) */
+
+/* --- 6.8 Модален прозорец (потвърждение за изтриване) ------------------- *
+ * {isOpen && (                                                            *
+ *   <div className="dr-modal-scrim" onClick={onCancel}>                   *
+ *     <div className="dr-modal" role="dialog" aria-modal="true"           *
+ *          onClick={e => e.stopPropagation()}>                            *
+ *       <h2>Да изтрия ли изделието?</h2>                                  *
+ *       <p>Това не може да се върне.</p>                                  *
+ *       <div className="dr-actions">…бутони…</div>                        *
+ *     </div>                                                              *
+ *   </div>                                                                *
+ * )}                                                                      *
+ * ---------------------------------------------------------------------- */
+.dr-modal-scrim {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;                     /* над хедъра (900) */
+  display: grid;
+  place-items: center;
+  padding: var(--dr-gutter);
+  background: rgba(28, 23, 20, .55);
+  animation: dr-fade 160ms ease-out;
+}
+.dr-modal {
+  width: 100%;
+  max-width: 440px;
+  padding: var(--dr-sp-lg);
+  background: var(--dr-surface);
+  border-radius: var(--dr-radius);
+  box-shadow: 0 24px 60px -12px rgba(28, 23, 20, .45);
+  animation: dr-pop 180ms cubic-bezier(.2, .9, .3, 1.2);
+}
+.dr-modal h2 { font-size: var(--dr-fs-h3); }
+.dr-modal p  { margin: var(--dr-sp-xs) 0 var(--dr-sp-md); color: var(--dr-text-soft); }
+.dr-modal .dr-actions { justify-content: flex-end; }
+@keyframes dr-fade { from { opacity: 0; } }
+@keyframes dr-pop  { from { opacity: 0; transform: scale(.96) translateY(6px); } }
