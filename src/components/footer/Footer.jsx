@@ -31,7 +31,7 @@ export default function Footer() {
             </div>
 
             <div className="df-bottom">
-                <div className="dr-container">© 2026 Дърворезби · SoftUni React проект</div>
+                <div className="dr-container">© {new Date().getFullYear()} Дърворезби · SoftUni React проект</div>
             </div>
         </footer>
     );
