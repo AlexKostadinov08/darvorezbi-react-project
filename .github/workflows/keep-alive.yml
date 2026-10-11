@@ -1,0 +1,21 @@
+# Поддържа Supabase базата активна.
+# Безплатните проекти в Supabase се паузират след 7 дни без заявки.
+# Този workflow прави една малка GET заявка на всеки 3 дни, за да не се стига дотам.
+# URL-ът и ключът се пазят в GitHub Secrets (Settings -> Secrets and variables -> Actions).
+
+name: Keep Supabase alive
+
+on:
+  schedule:
+    - cron: "17 6 */3 * *"   # на всеки 3 дни, в 06:17 UTC
+  workflow_dispatch:          # позволява ръчно пускане от таба Actions
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ping Supabase
+        run: |
+          curl --fail --silent --show-error \
+            "${{ secrets.SUPABASE_URL }}/rest/v1/products?select=id&limit=1" \
+            -H "apikey: ${{ secrets.SUPABASE_KEY }}"

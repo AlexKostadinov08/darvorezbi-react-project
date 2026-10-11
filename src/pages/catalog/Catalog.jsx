@@ -36,19 +36,19 @@ export default function Catalog() {
             )}
 
             {error && (
-                <div className="dr-alert-error dr-alert" role='alert'>
+                <div className="dr-alert--error dr-alert" role='alert'>
                     <strong>{error}</strong> Моля, опитайте отново
                 </div>
             )}
 
             {!isLoading && !error && products.length !== 0 && (
                 <ul className="dc-grid">
-                products.map(product => (
+                { products.map(product => (
                     <li key={product.id}>
                         <article className="dc-card">
                             <Link to={`/catalog/${product.id}`} className="dc-card-link">
                                 <div className="dc-card-media">
-                                    <img src={product.imageUrl} alt={product.title} width="600" height="450" loading="lazy" />
+                                    <img src={product.image_url} alt={product.title} width="600" height="450" loading="lazy" />
                                     <span className="dc-card-badge">{product.category}</span>
                                 </div>
                                 <div className="dc-card-body">
@@ -62,12 +62,17 @@ export default function Catalog() {
                             </Link>
                         </article>
                     </li>
-                ))
+                    ))}
                 </ul>
             )}
 
             {!isLoading && !error && products.length === 0 && (
-                
+                <div className="dr-empty">
+                    <span className="dr-empty-mark" aria-hidden="true"></span>
+                    <h2>Още няма изделия</h2>
+                    <p>Бъди първият, който добави.</p>
+                    <Link className="dr-btn" to="/create">Добави изделие</Link>
+                </div>
             )}
         </div>
     );
