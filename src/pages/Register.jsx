@@ -5,12 +5,13 @@ import { supabase } from "../services/supabase";
 
 export default function Register() {
     const [values, setValue] = useState({ email: '', password: '', retypePassword: '' });
+    const navigate = useNavigate();
 
     const changeHandler = (e) => {
         setValue(state => ({ ...state, [e.target.name]: e.target.value }))
     }
 
-    const registerHandler = (e) => {
+    const registerHandler = async (e) => {
         e.preventDefault();
 
         const { email, password, retypePassword } = values
@@ -24,17 +25,19 @@ export default function Register() {
             alert("Passwords do not match!")
             return;
         }
+
+        const { data, error } = await supabase.auth.signUp({ email, password });        
+
+        if (error) {
+            alert(error.message);
+            return;
+        }
+
+        console.log(data.user);
+        navigate('/')
     }
 
-    const { data, error } = await supabase.auth.signUp({ email, password });
 
-    if (error) {
-        alert(error.message);
-        return;
-    }
-
-    console.log(data.user);
-    navigate('/')
 
     return (
         <section className="dr-form-card">
@@ -49,7 +52,7 @@ export default function Register() {
 
                 <div className="dr-field">
                     <label htmlFor="password">Парола</label>
-                    <input id="password" name="password" type="password" value={values.password} onChange={changeHandler}/>
+                    <input id="password" name="password" type="password" value={values.password} onChange={changeHandler} />
                     <p className="dr-field-hint">Поне 6 символа</p>
                 </div>
 
