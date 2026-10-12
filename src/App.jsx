@@ -7,6 +7,7 @@ import Header from './components/header/Header'
 import Footer from './components/footer/Footer'
 
 import Register from './pages/Register'
+import Details from './pages/details/Details'
 
 function App() {
 
@@ -20,6 +21,7 @@ function App() {
                     <Route path='/catalog' element={<Catalog />} />
                     <Route path='/login' element={<Login />} />
                     <Route path='/register' element={<Register />} />
+                    <Route path='/catalog/:productId' element={<Details />} /> 
                 </Routes>
             </main>
 

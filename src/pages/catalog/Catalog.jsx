@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { getAll } from '../../services/productsService'
 import { Link } from 'react-router'
+
 import './Catalog.css'
 
 export default function Catalog() {
