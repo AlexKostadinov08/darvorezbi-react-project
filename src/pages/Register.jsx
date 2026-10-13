@@ -17,16 +17,21 @@ export default function Register() {
         const { email, password, retypePassword } = values
 
         if (!email || !password || !retypePassword) {
-            alert("All fields are required!")
+            alert("Всички полета са задължителни!")
             return;
         }
 
         if (password !== retypePassword) {
-            alert("Passwords do not match!")
+            alert("Паролите не съответстват!")
             return;
         }
 
-        const { data, error } = await supabase.auth.signUp({ email, password });        
+        if (password.length < 6) {
+            alert("Паролата трябва да съдържа поне 6 символа!")
+            return;
+        }
+
+        const { data, error } = await supabase.auth.signUp({ email, password });
 
         if (error) {
             alert(error.message);
