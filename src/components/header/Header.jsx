@@ -1,5 +1,7 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useContext } from 'react'
 import { Link, NavLink, useNavigate } from 'react-router'
+
+import { AuthContext } from '../../contexts/AuthContext'
 import './Header.css'
 
 const navLinks = [
@@ -18,8 +20,14 @@ export default function Header() {
     const [isScrolled, setIsScrolled] = useState(false)
     const [search, setSearch] = useState('')
     const navigate = useNavigate()
+    const { user, logout } = useContext(AuthContext)
 
     const closeMenu = () => setIsMenuOpen(false)
+
+    async function logoutHandler(params) {
+        await logout()
+        navigate('/')
+    }
 
     useEffect(() => {
         const onScroll = () => setIsScrolled(window.scrollY > 8)
@@ -67,6 +75,7 @@ export default function Header() {
                 <symbol id="i-gallery" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M4 5.4h16v13.2H4z" /><path d="M4 15.2l4.4-4 3 2.8 2.6-2.6L20 16.4" /><path d="M9 9.4h.01" /></g></symbol>
                 <symbol id="i-blog" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"><path d="M4.4 6.6h15.2" /><path d="M4.4 12h15.2" /><path d="M4.4 17.4h9.4" /></g></symbol>
                 <symbol id="i-about" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M12 3.8 20.2 12 12 20.2 3.8 12z" /><path d="M12 8.6v6.8" /></g></symbol>
+                <symbol id="i-logout" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M9.6 4.4H5.4v15.2h4.2" /><path d="M14.2 8l4 4-4 4" /><path d="M18.2 12H9.6" /></g></symbol>
             </svg>
 
             <header id="dh" className={isScrolled ? 'dh is-scrolled' : 'dh'}>
@@ -141,9 +150,16 @@ export default function Header() {
                                 )}
                             </div>
 
-                            <Link className="dh-icon-btn" to="/login" aria-label="Профил">
-                                <svg className="dh-i" width="22" height="22" aria-hidden="true" focusable="false"><use href="#i-user" /></svg>
-                            </Link>
+                            {user ? (
+                                <button className='dh-icon-btn' type='button' aria-label='Изход' onClick={logoutHandler}>
+                                    <svg className='dh-i' width='22' height='22' aria-hidden='true' focusable='false'><use href='#i-logout'/></svg>
+                                </button>
+                            ) : (
+                                <Link className="dh-icon-btn" to="/login" aria-label="Профил">
+                                    <svg className="dh-i" width="22" height="22" aria-hidden="true" focusable="false"><use href="#i-user" /></svg>
+                                </Link>
+                            )}
+
                         </div>
                     </div>
                 </div>
