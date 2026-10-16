@@ -24,7 +24,7 @@ export default function Header() {
 
     const closeMenu = () => setIsMenuOpen(false)
 
-    async function logoutHandler(params) {
+    async function logoutHandler() {
         await logout()
         navigate('/')
     }

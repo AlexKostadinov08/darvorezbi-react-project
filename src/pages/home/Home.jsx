@@ -23,7 +23,7 @@ export default function Home() {
                     <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M3 21l2.6-.6L19.4 6.6a2 2 0 0 0-2.8-2.8L2.8 17.6 3 21z"></path><path d="M14 6l4 4"></path></svg><span>Изцяло ръчна изработка</span></li>
                     <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M12 21c-4.2-3.7-7-7-7-10.6A7 7 0 0 1 12 3a7 7 0 0 1 7 7.4C19 14 16.2 17.3 12 21z"></path><circle cx="12" cy="10" r="2.4"></circle></svg><span>Работилница в Пазарджик</span></li>
                     <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M2 6.5h11v9H2z"></path><path d="M13 9.5h3.6L20 13v2.5h-7"></path><circle cx="6.5" cy="17.6" r="1.6"></circle><circle cx="16.5" cy="17.6" r="1.6"></circle></svg><span>Безплатна доставка над 300 лв.</span></li>
-                    <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.3 1.8.6 2.6a2 2 0 0 1-.4 2.1L8 9.7a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.8.3 1.7.5 2.6.6a2 2 0 0 1 1.7 2z"></path></svg><a href="tel:+359898910633">+359 898 910 633</a></li>
+                    <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.3 1.8.6 2.6a2 2 0 0 1-.4 2.1L8 9.7a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.8.3 1.7.5 2.6.6a2 2 0 0 1 1.7 2z"></path></svg><a href="tel:+359 888 777 666">+359 888 777 666</a></li>
                 </ul>
             </section>
 
@@ -280,7 +280,7 @@ export default function Home() {
                     <h2 className="drh-h2 drh-on-dark">Имате идея? Нека я издяламе.</h2>
                     <p className="drh-cta-p">Свържете се с нас и ни разкажете какво си представяте.</p>
                     <div className="drh-cta-c">
-                        <a href="tel:+359898910633">+359 898 910 633</a>
+                        <a href="tel:+359898910633">+359 888 777 666</a>
                         <a href="mailto:office@darvorezbi.com">office@darvorezbi.com</a>
                     </div>
                     <a className="drh-btn drh-btn-p" href="/kontakti/">Изпратете запитване</a>
