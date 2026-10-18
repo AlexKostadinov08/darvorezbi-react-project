@@ -17,9 +17,11 @@ export default function Details() {
         getOne(productId, controller.signal)
             .then(result => setProduct(result))
             .catch(err => {
-                if (err.name !== 'AbortError') setError(err.message)
+                if (!controller.signal.aborted) setError(err.message)
             })
-            .finally(() => setIsLoading(false))
+            .finally(() => {
+                if (!controller.signal.aborted) setIsLoading(false)
+            })
 
         return () => controller.abort()
     }, [productId])

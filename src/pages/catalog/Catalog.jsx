@@ -16,9 +16,11 @@ export default function Catalog() {
         getAll(controller.signal)
             .then(result => setProducts(result))
             .catch(err => {
-                if (err.name !== 'AbortError') setError(err.message)
+                if (!controller.signal.aborted) setError(err.message)
             })
-            .finally(() => setIsLoading(false))
+            .finally(() => {
+                if (!controller.signal.aborted) setIsLoading(false)
+            })
 
         return () => controller.abort()
     }, [])
@@ -44,25 +46,25 @@ export default function Catalog() {
 
             {!isLoading && !error && products.length !== 0 && (
                 <ul className="dc-grid">
-                { products.map(product => (
-                    <li key={product.id}>
-                        <article className="dc-card">
-                            <Link to={`/catalog/${product.id}`} className="dc-card-link">
-                                <div className="dc-card-media">
-                                    <img src={product.image_url} alt={product.title} width="600" height="450" loading="lazy" />
-                                    <span className="dc-card-badge">{product.category}</span>
-                                </div>
-                                <div className="dc-card-body">
-                                    <h3 className="dc-card-title">{product.title}</h3>
-                                    <p className="dc-card-text">{product.description}</p>
-                                    <div className="dc-card-foot">
-                                        <span className="dc-card-price">{product.price} €</span>
-                                        {/* <span className="dc-card-likes">♥ {}</span> */}
+                    {products.map(product => (
+                        <li key={product.id}>
+                            <article className="dc-card">
+                                <Link to={`/catalog/${product.id}`} className="dc-card-link">
+                                    <div className="dc-card-media">
+                                        <img src={product.image_url} alt={product.title} width="600" height="450" loading="lazy" />
+                                        <span className="dc-card-badge">{product.category}</span>
                                     </div>
-                                </div>
-                            </Link>
-                        </article>
-                    </li>
+                                    <div className="dc-card-body">
+                                        <h3 className="dc-card-title">{product.title}</h3>
+                                        <p className="dc-card-text">{product.description}</p>
+                                        <div className="dc-card-foot">
+                                            <span className="dc-card-price">{product.price} €</span>
+                                            {/* <span className="dc-card-likes">♥ {}</span> */}
+                                        </div>
+                                    </div>
+                                </Link>
+                            </article>
+                        </li>
                     ))}
                 </ul>
             )}
