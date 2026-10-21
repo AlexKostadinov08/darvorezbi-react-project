@@ -45,3 +45,12 @@ export async function update(productId, payload) {
     if (error) throw error
     return data
 }
+
+export async function remove(productId) {
+    const { error } = await supabase
+        .from('products')
+        .delete()
+        .eq('id', productId)
+    
+    if (error) throw error
+}

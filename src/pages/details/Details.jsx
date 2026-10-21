@@ -1,12 +1,13 @@
 import { useContext, useEffect, useState } from 'react';
-import { getOne } from '../../services/productsService';
-import { Link, useParams } from 'react-router';
+import { getOne, remove } from '../../services/productsService';
+import { Link, useParams, useNavigate } from 'react-router';
 import { AuthContext } from '../../contexts/AuthContext';
 
 import './Details.css'
 
 export default function Details() {
     const { user } = useContext(AuthContext)
+    const navigate = useNavigate()
 
     const { productId } = useParams();
     const [product, setProduct] = useState(null)
@@ -29,6 +30,17 @@ export default function Details() {
 
         return () => controller.abort()
     }, [productId])
+
+    async function deleteHandler() {
+        if (!confirm("Сигурни ли сте, че искате да изтриете това изделие?")) return
+        
+        try {
+            await remove(productId)
+            navigate('/catalog')
+        } catch(err) {
+            alert(err.message)
+        }
+    }
 
     return (
         <article className="dr-container">
@@ -61,7 +73,7 @@ export default function Details() {
                         {isOwner && (
                             <div className="dr-actions">
                                 <Link className="dr-btn dr-btn--ghost dr-btn--sm" to={`/catalog/${product.id}/edit`}>Редактирай</Link>
-                                <button className="dr-btn dr-btn--danger dr-btn--sm" type="button">Изтрий</button>
+                                <button className="dr-btn dr-btn--danger dr-btn--sm" type="button" onClick={deleteHandler}>Изтрий</button>
                             </div>
                         )}
                     </div>
