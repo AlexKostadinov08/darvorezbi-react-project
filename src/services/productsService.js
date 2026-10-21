@@ -23,13 +23,25 @@ export async function getOne(productId, signal) {
     return data
 }
 
-export async function create(payload ) {
+export async function create(payload) {
     const { data, error } = await supabase
         .from('products')
         .insert(payload)
         .select()
         .single()
 
+    if (error) throw error
+    return data
+}
+
+export async function update(productId, payload) {
+    const { data, error } = await supabase
+        .from('products')
+        .update(payload)
+        .eq('id', productId)
+        .select()
+        .single()
+    
     if (error) throw error
     return data
 }

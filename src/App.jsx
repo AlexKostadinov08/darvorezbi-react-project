@@ -10,6 +10,7 @@ import Register from './pages/Register'
 import Details from './pages/details/Details'
 import Create from './pages/create/Create'
 import NotFound from './pages/notfound/NotFound'
+import Edit from './pages/edit/Edit'
 
 import PrivateGuard from './guards/PrivateGuard'
 import GuestGuard from './guards/GuestGuard'
@@ -29,6 +30,7 @@ function App() {
 
                     <Route element={<PrivateGuard />}>
                         <Route path='/create' element={<Create />} />
+                        <Route path='/catalog/:productId/edit' element={< Edit />}/>
                     </Route>
 
                     <Route element={<GuestGuard />}>

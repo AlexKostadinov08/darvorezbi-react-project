@@ -1,15 +1,19 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { getOne } from '../../services/productsService';
 import { Link, useParams } from 'react-router';
+import { AuthContext } from '../../contexts/AuthContext';
 
 import './Details.css'
 
 export default function Details() {
+    const { user } = useContext(AuthContext)
 
     const { productId } = useParams();
     const [product, setProduct] = useState(null)
     const [isLoading, setIsLoading] = useState(true)
     const [error, setError] = useState(null)
+
+    const isOwner = user && product && user.id === product.user_id;
 
     useEffect(() => {
         const controller = new AbortController()
@@ -54,6 +58,12 @@ export default function Details() {
                         <p className="dd-price">{product.price} €</p>
                         <p className="dd-meta">Добавено от <strong>{product.author_name}</strong></p>
                         <p className="dd-lede">{product.description}</p>
+                        {isOwner && (
+                            <div className="dr-actions">
+                                <Link className="dr-btn dr-btn--ghost dr-btn--sm" to={`/catalog/${product.id}/edit`}>Редактирай</Link>
+                                <button className="dr-btn dr-btn--danger dr-btn--sm" type="button">Изтрий</button>
+                            </div>
+                        )}
                     </div>
                 </section>
             )}
