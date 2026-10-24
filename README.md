@@ -4,8 +4,8 @@ My project for the SoftUni ReactJS Regular Exam 2026.
 
 Darvorezbi is a small catalog of handmade wood carvings - figures and wall panels. Anyone can browse the catalog and open an item. Registered users can add their own carvings, edit or delete them, like other people's work and leave comments.
 
-- **Live demo:** [_link will be added after deploy_](https://darvorezbi-site-softuni.alexsm2206.workers.dev/)
-- **Repository:** [_link_](https://github.com/AlexKostadinov08/darvorezbi-react-project)
+- **Live demo:** https://darvorezbi-site-softuni.alexsm2206.workers.dev/
+- **Repository:** https://github.com/AlexKostadinov08/darvorezbi-react-project
 
 ## Design
 
@@ -116,4 +116,4 @@ Every page that loads data shows a spinner while waiting and a message if the re
 
 ## Deployment
 
-The frontend is deployed on _hosting_. The backend is Supabase, so there is no separate server to deploy. Supabase pauses free projects after a week without activity, so a small GitHub Actions workflow (`.github/workflows/keep-alive.yml`) pings the database on a schedule to keep it awake.
+The frontend is deployed on Cloudflare Workers as static assets. Every push to `main` builds and deploys the app automatically, and `wrangler.jsonc` tells Cloudflare to return `index.html` for any path, so links like `/catalog/5` work on refresh. The backend is Supabase, so there is no separate server to deploy. Supabase pauses free projects after a week without activity, so a small GitHub Actions workflow (`.github/workflows/keep-alive.yml`) pings the database on a schedule to keep it awake.
