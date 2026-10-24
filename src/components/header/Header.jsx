@@ -7,6 +7,7 @@ import './Header.css'
 const navLinks = [
     { to: '/', label: 'Начало', icon: 'i-home' },
     { to: '/catalog', label: 'Каталог', icon: 'i-shop' },
+    { to: '/create', label: 'Качи изделие', icon: 'i-shop' },
     // { to: '/gallery', label: 'Галерия', icon: 'i-gallery' },
     // { to: '/blog', label: 'Блог', icon: 'i-blog' },
     // { to: '/about', label: 'За нас', icon: 'i-about' },
@@ -112,6 +113,9 @@ export default function Header() {
                                 {navLinks.map(link =>
                                     <li key={link.to}><NavLink to={link.to}>{link.label}</NavLink></li>
                                 )}
+                                {user && (
+                                    <li><NavLink to="/create">Добави изделие</NavLink></li>
+                                )}
                             </ul>
                         </nav>
 
@@ -152,7 +156,7 @@ export default function Header() {
 
                             {user ? (
                                 <button className='dh-icon-btn' type='button' aria-label='Изход' onClick={logoutHandler}>
-                                    <svg className='dh-i' width='22' height='22' aria-hidden='true' focusable='false'><use href='#i-logout'/></svg>
+                                    <svg className='dh-i' width='22' height='22' aria-hidden='true' focusable='false'><use href='#i-logout' /></svg>
                                 </button>
                             ) : (
                                 <Link className="dh-icon-btn" to="/login" aria-label="Профил">
@@ -206,6 +210,14 @@ export default function Header() {
                                 </NavLink>
                             </li>
                         ))}
+                        {user && (
+                            <li>
+                                <NavLink to="/create" className={activeClass} onClick={closeMenu}>
+                                    <svg className="dh-i" width="20" height="20" aria-hidden="true" focusable="false"><use href="#i-shop" /></svg>
+                                    Добави изделие
+                                </NavLink>
+                            </li>
+                        )}
                     </ul>
                 </nav>
 
