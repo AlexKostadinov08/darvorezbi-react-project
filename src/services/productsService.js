@@ -50,7 +50,7 @@ export async function remove(productId) {
     const { error } = await supabase
         .from('products')
         .delete()
-        .eq('id', productId1)
+        .eq('id', productId)
     
     if (error) throw error
 }
