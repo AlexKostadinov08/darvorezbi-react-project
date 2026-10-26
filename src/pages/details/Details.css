@@ -751,7 +751,20 @@
   border-radius: var(--dr-radius);
   box-shadow: var(--dr-shadow-md);
 }
-.dd-media img { display: block; width: 100%; aspect-ratio: 4 / 3; object-fit: cover; }
+/* contain - цялото изделие се вижда, без да се реже; при hover снимката се увеличава
+   там, където е мишката (transform-origin се задава от Details.jsx) */
+.dd-media img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: contain;
+  padding: var(--dr-sp-sm);
+  transition: transform .35s ease;
+}
+@media (hover: hover) {
+  .dd-media img { cursor: zoom-in; }
+  .dd-media:hover img { transform: scale(1.8); }
+}
 
 .dd-info h1 { font-size: var(--dr-fs-h1); }
 .dd-price {

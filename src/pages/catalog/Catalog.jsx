@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { getAll } from '../../services/productsService'
-import { Link } from 'react-router'
+import { Link, useSearchParams } from 'react-router'
 
 import './Catalog.css'
 
@@ -9,6 +9,22 @@ export default function Catalog() {
     const [products, setProducts] = useState([])
     const [isLoading, setIsLoading] = useState(true)
     const [error, setError] = useState(null)
+
+    // Търсенето живее в адреса (/catalog?search=петле), за да работи и от хедъра, и при F5
+    const [searchParams, setSearchParams] = useSearchParams()
+    const search = searchParams.get('search') || ''
+    const query = search.trim().toLowerCase()
+
+    const visibleProducts = products.filter(p =>
+        p.title.toLowerCase().includes(query) ||
+        p.category.toLowerCase().includes(query) ||
+        p.description.toLowerCase().includes(query)
+    )
+
+    function searchChangeHandler(e) {
+        const value = e.target.value
+        setSearchParams(value ? { search: value } : {}, { replace: true })
+    }
 
     useEffect(() => {
         const controller = new AbortController()
@@ -28,8 +44,17 @@ export default function Catalog() {
     return (
         <div className="dr-container">
             <header className="dr-page-head">
-
+                <p className="dr-kicker">Каталог</p>
+                <h1>{query ? `Резултати за „${search.trim()}“` : 'Всички изделия'}</h1>
             </header>
+
+            <div className="dc-toolbar">
+                <label className="dc-search">
+                    <span className="dr-sr-only">Търсене</span>
+                    <input type="search" placeholder="Търси изделие..." value={search} onChange={searchChangeHandler} />
+                </label>
+                {!isLoading && !error && <p className="dc-count">{visibleProducts.length} изделия</p>}
+            </div>
 
             {isLoading && (
                 <div className="dr-loader" role='status'>
@@ -44,9 +69,9 @@ export default function Catalog() {
                 </div>
             )}
 
-            {!isLoading && !error && products.length !== 0 && (
+            {!isLoading && !error && visibleProducts.length !== 0 && (
                 <ul className="dc-grid">
-                    {products.map(product => (
+                    {visibleProducts.map(product => (
                         <li key={product.id}>
                             <article className="dc-card">
                                 <Link to={`/catalog/${product.id}`} className="dc-card-link">
@@ -67,6 +92,15 @@ export default function Catalog() {
                         </li>
                     ))}
                 </ul>
+            )}
+
+            {!isLoading && !error && products.length !== 0 && visibleProducts.length === 0 && (
+                <div className="dr-empty">
+                    <span className="dr-empty-mark" aria-hidden="true"></span>
+                    <h2>Няма намерени изделия</h2>
+                    <p>Опитай с друга дума или разгледай всички изделия.</p>
+                    <button className="dr-btn" type="button" onClick={() => setSearchParams({})}>Покажи всички</button>
+                </div>
             )}
 
             {!isLoading && !error && products.length === 0 && (

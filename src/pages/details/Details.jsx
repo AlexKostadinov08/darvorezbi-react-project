@@ -57,6 +57,14 @@ export default function Details() {
         }
     }
 
+    // Zoom on hover: увеличението тръгва от точката, където е мишката
+    function zoomHandler(e) {
+        const rect = e.currentTarget.getBoundingClientRect()
+        const x = (e.clientX - rect.left) / rect.width * 100
+        const y = (e.clientY - rect.top) / rect.height * 100
+        e.currentTarget.style.transformOrigin = `${x}% ${y}%`
+    }
+
     async function deleteHandler() {
         if (!confirm("Сигурни ли сте, че искате да изтриете това изделие?")) return
 
@@ -88,7 +96,7 @@ export default function Details() {
             {!isLoading && !error && product && (
                 <section className="dd-top">
                     <div className="dd-media">
-                        <img src={product.image_url} alt={product.title} width="800" height="600" />
+                        <img src={product.image_url} alt={product.title} width="800" height="600" onMouseMove={zoomHandler} />
                     </div>
                     <div className="dd-info">
                         <p className="dr-kicker">{product.category}</p>
