@@ -10,7 +10,6 @@ export default function Catalog() {
     const [isLoading, setIsLoading] = useState(true)
     const [error, setError] = useState(null)
 
-    // Търсенето живее в адреса (/catalog?search=петле), за да работи и от хедъра, и при F5
     const [searchParams, setSearchParams] = useSearchParams()
     const search = searchParams.get('search') || ''
     const query = search.trim().toLowerCase()
@@ -84,7 +83,6 @@ export default function Catalog() {
                                         <p className="dc-card-text">{product.description}</p>
                                         <div className="dc-card-foot">
                                             <span className="dc-card-price">{product.price} €</span>
-                                            {/* <span className="dc-card-likes">♥ {}</span> */}
                                         </div>
                                     </div>
                                 </Link>

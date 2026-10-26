@@ -3,7 +3,6 @@ import { Link } from 'react-router'
 
 import './Home.css'
 
-// Изделията в карусела - id-тата са същите като в базата (/catalog/:id)
 const featured = [
     { id: 6, name: 'Птици', category: 'Дърворезбено пано', price: 170, image: 'ptici_25-cut', description: 'Две птици една срещу друга, симетричен мотив от народната резба.' },
     { id: 2, name: 'Петле и слънце', category: 'Дърворезбено пано', price: 240, image: 'petle_i_slance_68-cut', description: 'Едри форми и дълбока резба. Пано, което държи стената само.' },
@@ -18,8 +17,6 @@ const featured = [
 const contactEmail = 'mailto:office@darvorezbi.com'
 
 export default function Home() {
-    // CSS-ът показва като активен слайд втория елемент в списъка (nth-child(2)).
-    // Затова не местим слайдовете, а завъртаме масива: start е индексът на първия елемент.
     const [start, setStart] = useState(featured.length - 1)
 
     const rotated = [...featured.slice(start), ...featured.slice(0, start)]

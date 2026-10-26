@@ -57,7 +57,6 @@ export default function Details() {
         }
     }
 
-    // Zoom on hover: увеличението тръгва от точката, където е мишката
     function zoomHandler(e) {
         const rect = e.currentTarget.getBoundingClientRect()
         const x = (e.clientX - rect.left) / rect.width * 100
