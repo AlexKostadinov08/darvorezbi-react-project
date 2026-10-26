@@ -6,6 +6,7 @@ Darvorezbi is a small catalog of handmade wood carvings - figures and wall panel
 
 - **Live demo:** https://darvorezbi-site-softuni.alexsm2206.workers.dev/
 - **Repository:** https://github.com/AlexKostadinov08/darvorezbi-react-project
+- **Demo account:** `demo@darvorezbi.bg` / `qwerty123`
 
 ## Design
 
@@ -111,8 +112,10 @@ Every page that loads data shows a spinner while waiting and a message if the re
 
 ### Demo account
 
-- Email: _demo email_
-- Password: _demo password_
+- Email: `demo@darvorezbi.bg`
+- Password: `qwerty123`
+
+You can also register a new account - there is no email confirmation.
 
 ## Deployment
 
