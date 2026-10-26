@@ -7,7 +7,6 @@ import './Header.css'
 const navLinks = [
     { to: '/', label: 'Начало', icon: 'i-home' },
     { to: '/catalog', label: 'Каталог', icon: 'i-shop' },
-    { to: '/create', label: 'Качи изделие', icon: 'i-shop' },
     // { to: '/gallery', label: 'Галерия', icon: 'i-gallery' },
     // { to: '/blog', label: 'Блог', icon: 'i-blog' },
     // { to: '/about', label: 'За нас', icon: 'i-about' },

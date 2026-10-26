@@ -96,7 +96,7 @@ Ownership is checked in React (the buttons are shown only to the author) and aga
 
 ### Likes and comments
 
-Each like is a row in the `likes` table. The database allows only one like per user per item. Clicking the heart again removes the like. Comments are shown under each item. Logged-in users can add comments and delete their own.
+Each like is a row in the `likes` table. The database allows only one like per user per item. Clicking the heart again removes the like. Comments are shown under each item, oldest first. Guests can read them, logged-in users can add new ones, and a new comment appears right away without reloading the page.
 
 ### Validation
 

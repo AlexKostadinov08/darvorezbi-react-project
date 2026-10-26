@@ -12,12 +12,11 @@ export async function getLikes(productId, signal) {
 }
 
 export async function like(productId) {
-    const { data, error } = await supabase
+    const { error } = await supabase
         .from('likes')
-        .insert({productId})
+        .insert({'product_id': productId})
 
     if (error) throw error
-    return data
 }
 
 export async function unlike(productId, userId) {
