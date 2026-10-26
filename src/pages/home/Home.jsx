@@ -1,21 +1,53 @@
+import { useState } from 'react'
+import { Link } from 'react-router'
+
 import './Home.css'
 
+// Изделията в карусела - id-тата са същите като в базата (/catalog/:id)
+const featured = [
+    { id: 6, name: 'Птици', category: 'Дърворезбено пано', price: 170, image: 'ptici_25-cut', description: 'Две птици една срещу друга, симетричен мотив от народната резба.' },
+    { id: 2, name: 'Петле и слънце', category: 'Дърворезбено пано', price: 240, image: 'petle_i_slance_68-cut', description: 'Едри форми и дълбока резба. Пано, което държи стената само.' },
+    { id: 4, name: 'Птица в елипса', category: 'Дърворезбено пано', price: 210, image: 'ptica_elipsa_40-1-cut', description: 'Елипсовидно пано с птица сред цветя и ажурна резба.' },
+    { id: 1, name: 'Петле голямо', category: 'Фигура', price: 180, image: 'petle_goliamo_54-1-cut', description: 'Класически български мотив с ясен силует и плътна резба.' },
+    { id: 3, name: 'Сова', category: 'Фигура', price: 160, image: 'sova_60-2-cut', description: 'Сова в профил с разперени криле и подробна работа по перата.' },
+    { id: 8, name: 'Глухар', category: 'Дърворезбено пано', price: 260, image: 'c-gluhar-56-cut', description: 'Глухар с разтворена опашка. Едра, спокойна форма.' },
+    { id: 7, name: 'Слънце', category: 'Дърворезбено пано', price: 150, image: 'slance_65-cut', description: 'Слънце с лъчи и лице - топъл мотив за кухня или антре.' },
+    { id: 5, name: 'Птица с цвете', category: 'Дърворезбено пано', price: 195, image: 'ptica_elipsa_12-1-cut', description: 'Птица в елипса, вписана сред листа и цвят.' },
+]
+
+const contactEmail = 'mailto:office@darvorezbi.com'
+
 export default function Home() {
+    // CSS-ът показва като активен слайд втория елемент в списъка (nth-child(2)).
+    // Затова не местим слайдовете, а завъртаме масива: start е индексът на първия елемент.
+    const [start, setStart] = useState(featured.length - 1)
+
+    const rotated = [...featured.slice(start), ...featured.slice(0, start)]
+    const active = rotated[1]
+    const activeNumber = (start + 1) % featured.length + 1
+
+    function nextHandler() {
+        setStart(state => (state + 1) % featured.length)
+    }
+
+    function prevHandler() {
+        setStart(state => (state - 1 + featured.length) % featured.length)
+    }
+
     return (
         <div className="drh">
 
             <section className="drh-hero">
-                <img className="drh-hero-img" src="/images/old-wooden-wall.jpg" srcSet="/images/old-wooden-wall-768x439.jpg 768w, /images/old-wooden-wall-1300x743.jpg 1300w, /images/old-wooden-wall-1536x878.jpg 1536w, /images/old-wooden-wall.jpg 2000w" sizes="100vw"width="2000" height="1143" alt="" fetchPriority="high" decoding="sync" />
-                    <span className="drh-hero-scrim" aria-hidden="true"></span>
-                    <div className="drh-wrap drh-hero-in">
-                        <h1 className="drh-h1">Изкуство от дърво, направено със сърце и душа</h1>
-                        <span className="drh-hair" aria-hidden="true"></span>
-                        <p className="drh-hero-sub">Ръчна дърворезба от Пазарджик. Всяко изделие се изработва с длето и търпение и е единствено по рода си.</p>
-                        <div className="drh-hero-cta">
-                            <a className="drh-btn drh-btn-p" href="/magazin/">Разгледайте изделията</a>
-                            <a className="drh-btn drh-btn-g" href="/kontakti/">Поръчайте по ваша идея</a>
-                        </div>
+                <img className="drh-hero-img" src="/images/old-wooden-wall.jpg" srcSet="/images/old-wooden-wall-768x439.jpg 768w, /images/old-wooden-wall-1300x743.jpg 1300w, /images/old-wooden-wall-1536x878.jpg 1536w, /images/old-wooden-wall.jpg 2000w" sizes="100vw" width="2000" height="1143" alt="" fetchPriority="high" decoding="sync" />
+                <span className="drh-hero-scrim" aria-hidden="true"></span>
+                <div className="drh-wrap drh-hero-in">
+                    <h1 className="drh-h1">Изкуство от дърво, направено със сърце и душа</h1>
+                    <span className="drh-hair" aria-hidden="true"></span>
+                    <p className="drh-hero-sub">Ръчна дърворезба от Пазарджик. Всяко изделие се изработва с длето и търпение и е единствено по рода си.</p>
+                    <div className="drh-hero-cta">
+                        <Link className="drh-btn drh-btn-p" to="/catalog">Разгледайте изделията</Link>
                     </div>
+                </div>
             </section>
 
             <section className="drh-trust" aria-label="Защо да изберете нас">
@@ -33,15 +65,15 @@ export default function Home() {
                         <p className="drh-kicker">Какво предлагаме</p>
                         <h2 className="drh-h2">От идеята до последния детайл</h2>
                         <p className="drh-lede">Изработваме дърворезби по традиционни български мотиви и по идея на клиента. Всяко изделие минава през ръцете на майстора, от първата скица до последния щрих на длетото.</p>
-                        <a className="drh-link" href="/magazin/">Вижте всички изделия <span aria-hidden="true">→</span></a>
+                        <Link className="drh-link" to="/catalog">Вижте всички изделия <span aria-hidden="true">→</span></Link>
                     </div>
                     <div className="drh-tiles">
-                        <a className="drh-tile" href="/product-category/%D0%BF%D0%B0%D0%BD%D0%BE/"><img src="/images/petle_i_slance_68-700x878.jpg"width="700" height="878" loading="lazy" decoding="async" alt="Дърворезбено пано „Петле и слънце“" /><span className="drh-tile-n">Дърворезбени пана</span></a>
-                        <a className="drh-tile" href="/product-category/%D0%BF%D0%BB%D0%B0%D1%81%D1%82%D0%B8%D0%BA%D0%B0/"><img src="/images/sova_60-2-700x878.jpg"width="700" height="878" loading="lazy" decoding="async" alt="Дърворезбена пластика „Сова“" /><span className="drh-tile-n">Пластики</span></a>
-                        <a className="drh-tile" href="/product-category/%D0%BF%D0%BB%D0%B0%D1%81%D1%82%D0%B8%D0%BA%D0%B0/"><img src="/images/c-gluhar-56-700x878.jpg"width="700" height="878" loading="lazy" decoding="async" alt="Дърворезба на глухар" /><span className="drh-tile-n">Животински форми</span></a>
-                        <a className="drh-tile drh-tile-notphoto" href="/kontakti/"><span className="drh-tile-tex" aria-hidden="true"></span><span className="drh-tile-n">Фризове и дърворезби</span></a>
-                        <a className="drh-tile drh-tile-notphoto" href="/kontakti/"><span className="drh-tile-tex" aria-hidden="true"></span><span className="drh-tile-n">Декоративни рамки</span></a>
-                        <a className="drh-tile" href="/kontakti/"><img src="/images/dleto-darvorezbi.webp"width="500" height="500" loading="lazy" decoding="async" alt="Длето за дърворезба" /><span className="drh-tile-n">Дърворезба по поръчка</span></a>
+                        <Link className="drh-tile" to="/catalog"><img src="/images/petle_i_slance_68-700x878.jpg" width="700" height="878" loading="lazy" decoding="async" alt="Дърворезбено пано „Петле и слънце“" /><span className="drh-tile-n">Дърворезбени пана</span></Link>
+                        <Link className="drh-tile" to="/catalog"><img src="/images/sova_60-2-700x878.jpg" width="700" height="878" loading="lazy" decoding="async" alt="Дърворезбена пластика „Сова“" /><span className="drh-tile-n">Пластики</span></Link>
+                        <Link className="drh-tile" to="/catalog"><img src="/images/c-gluhar-56-700x878.jpg" width="700" height="878" loading="lazy" decoding="async" alt="Дърворезба на глухар" /><span className="drh-tile-n">Животински форми</span></Link>
+                        <Link className="drh-tile drh-tile-notphoto" to="/catalog"><span className="drh-tile-tex" aria-hidden="true"></span><span className="drh-tile-n">Фризове и дърворезби</span></Link>
+                        <Link className="drh-tile drh-tile-notphoto" to="/catalog"><span className="drh-tile-tex" aria-hidden="true"></span><span className="drh-tile-n">Декоративни рамки</span></Link>
+                        <a className="drh-tile" href={contactEmail}><img src="/images/dleto-darvorezbi.webp" width="500" height="500" loading="lazy" decoding="async" alt="Длето за дърворезба" /><span className="drh-tile-n">Дърворезба по поръчка</span></a>
                     </div>
                 </div>
             </section>
@@ -52,130 +84,61 @@ export default function Home() {
                         <div>
                             <h2 className="drh-h2">Най-популярните ни творби</h2>
                         </div>
-                        <a className="drh-link drh-head-l" href="/magazin/">Вижте всички продукти <span aria-hidden="true">→</span></a>
+                        <Link className="drh-link drh-head-l" to="/catalog">Вижте всички изделия <span aria-hidden="true">→</span></Link>
                     </div>
                 </div>
 
-                <div className="drh-car" id="drh-car" aria-roledescription="карусел" aria-label="Най-популярни изделия">
+                <div className="drh-car" aria-roledescription="карусел" aria-label="Най-популярни изделия">
                     <span className="drh-car-glow" aria-hidden="true"></span>
                     <div className="drh-car-stage">
                         <div className="drh-car-list" id="drh-car-list">
-                            <article className="drh-car-i" role="group" aria-roledescription="слайд" aria-label="Птици">
-                                <img className="drh-car-img" src="/images/ptici_25-cut.webp" srcSet="/images/ptici_25-cut-700x878.webp 700w, /images/ptici_25-cut.webp 900w" sizes="(maxWidth:767px) 62vw, 30vw"width="900" height="1129" loading="lazy" decoding="async" alt="Птици, ръчна дърворезба" />
+                            {rotated.map((item, i) => (
+                                <article key={item.id} className="drh-car-i" role="group" aria-roledescription="слайд" aria-label={item.name} aria-hidden={i !== 1} inert={i !== 1}>
+                                    <img className="drh-car-img" src={`/images/${item.image}.webp`} srcSet={`/images/${item.image}-700x878.webp 700w, /images/${item.image}.webp 900w`} sizes="(max-width: 767px) 62vw, 30vw" width="900" height="1129" loading="lazy" decoding="async" alt={`${item.name}, ръчна дърворезба`} />
                                     <div className="drh-car-txt">
-                                        <p className="drh-car-cat">Дърворезбено пано</p>
-                                        <h3 className="drh-car-name">Птици</h3>
-                                        <p className="drh-car-des">Две птици една срещу друга, симетричен мотив от народната резба.</p>
-                                        <p className="drh-car-price">118.00&nbsp;лв.</p>
-                                        <a className="drh-btn drh-btn-p drh-car-cta" href="/produkt/%D0%BF%D1%82%D0%B8%D1%86%D0%B8/">Вижте изделието</a>
+                                        <p className="drh-car-cat">{item.category}</p>
+                                        <h3 className="drh-car-name">{item.name}</h3>
+                                        <p className="drh-car-des">{item.description}</p>
+                                        <p className="drh-car-price">{item.price} €</p>
+                                        <Link className="drh-btn drh-btn-p drh-car-cta" to={`/catalog/${item.id}`}>Вижте изделието</Link>
                                     </div>
-                            </article>
-                            <article className="drh-car-i" role="group" aria-roledescription="слайд" aria-label="Петле и слънце">
-                                <img className="drh-car-img" src="/images/petle_i_slance_68-cut.webp" srcSet="/images/petle_i_slance_68-cut-700x878.webp 700w, /images/petle_i_slance_68-cut.webp 900w" sizes="(maxWidth:767px) 62vw, 30vw"width="900" height="1129" loading="lazy" decoding="async" alt="Петле и слънце, ръчна дърворезба" />
-                                    <div className="drh-car-txt">
-                                        <p className="drh-car-cat">Дърворезбено пано</p>
-                                        <h3 className="drh-car-name">Петле и слънце</h3>
-                                        <p className="drh-car-des">Едри форми и дълбока резба. Пано, което държи стената само.</p>
-                                        <p className="drh-car-price">295.00&nbsp;лв.</p>
-                                        <a className="drh-btn drh-btn-p drh-car-cta" href="/produkt/smart-watches-wood-edition/">Вижте изделието</a>
-                                    </div>
-                            </article>
-                            <article className="drh-car-i" role="group" aria-roledescription="слайд" aria-label="Птица с цветя – елипса">
-                                <img className="drh-car-img" src="/images/ptica_elipsa_40-1-cut.webp" srcSet="/images/ptica_elipsa_40-1-cut-700x878.webp 700w, /images/ptica_elipsa_40-1-cut.webp 900w" sizes="(maxWidth:767px) 62vw, 30vw"width="900" height="1129" loading="lazy" decoding="async" alt="Птица с цветя – елипса, ръчна дърворезба" />
-                                    <div className="drh-car-txt">
-                                        <p className="drh-car-cat">Дърворезбено пано</p>
-                                        <h3 className="drh-car-name">Птица с цветя – елипса</h3>
-                                        <p className="drh-car-des">Елипсовидно пано с птица сред цветя и ажурна резба.</p>
-                                        <p className="drh-car-price">260.00&nbsp;лв.</p>
-                                        <a className="drh-btn drh-btn-p drh-car-cta" href="/produkt/ptica-s-cvetia/">Вижте изделието</a>
-                                    </div>
-                            </article>
-                            <article className="drh-car-i" role="group" aria-roledescription="слайд" aria-label="Петле, голямо">
-                                <img className="drh-car-img" src="/images/petle_goliamo_54-1-cut.webp" srcSet="/images/petle_goliamo_54-1-cut-700x878.webp 700w, /images/petle_goliamo_54-1-cut.webp 900w" sizes="(maxWidth:767px) 62vw, 30vw"width="900" height="1129" loading="lazy" decoding="async" alt="Петле, голямо, ръчна дърворезба" />
-                                    <div className="drh-car-txt">
-                                        <p className="drh-car-cat">Дърворезбено пано</p>
-                                        <h3 className="drh-car-name">Петле, голямо</h3>
-                                        <p className="drh-car-des">Класически български мотив с ясен силует и плътна резба.</p>
-                                        <p className="drh-car-price">224.00&nbsp;лв.</p>
-                                        <a className="drh-btn drh-btn-p drh-car-cta" href="/produkt/petle-goliamo/">Вижте изделието</a>
-                                    </div>
-                            </article>
-                            <article className="drh-car-i" role="group" aria-roledescription="слайд" aria-label="Сова – профил">
-                                <img className="drh-car-img" src="/images/sova_60-2-cut.webp" srcSet="/images/sova_60-2-cut-700x878.webp 700w, /images/sova_60-2-cut.webp 900w" sizes="(maxWidth:767px) 62vw, 30vw"width="900" height="1129" loading="lazy" decoding="async" alt="Сова – профил, ръчна дърворезба" />
-                                    <div className="drh-car-txt">
-                                        <p className="drh-car-cat">Дърворезбена пластика</p>
-                                        <h3 className="drh-car-name">Сова – профил</h3>
-                                        <p className="drh-car-des">Сова в профил с разперени криле и подробна работа по перата.</p>
-                                        <p className="drh-car-price">210.00&nbsp;лв.</p>
-                                        <a className="drh-btn drh-btn-p drh-car-cta" href="/produkt/eames-lounge-chair/">Вижте изделието</a>
-                                    </div>
-                            </article>
-                            <article className="drh-car-i" role="group" aria-roledescription="слайд" aria-label="Птица – глухар">
-                                <img className="drh-car-img" src="/images/c-gluhar-56-cut.webp" srcSet="/images/c-gluhar-56-cut-700x878.webp 700w, /images/c-gluhar-56-cut.webp 900w" sizes="(maxWidth:767px) 62vw, 30vw"width="900" height="1129" loading="lazy" decoding="async" alt="Птица – глухар, ръчна дърворезба" />
-                                    <div className="drh-car-txt">
-                                        <p className="drh-car-cat">Дърворезбено пано</p>
-                                        <h3 className="drh-car-name">Птица – глухар</h3>
-                                        <p className="drh-car-des">Глухар с разтворена опашка. Едра, спокойна форма.</p>
-                                        <p className="drh-car-price">185.00&nbsp;лв.</p>
-                                        <a className="drh-btn drh-btn-p drh-car-cta" href="/produkt/%D0%BF%D1%82%D0%B8%D1%86%D0%B0-%D0%B3%D0%BB%D1%83%D1%85%D0%B0%D1%80/">Вижте изделието</a>
-                                    </div>
-                            </article>
-                            <article className="drh-car-i" role="group" aria-roledescription="слайд" aria-label="Слънце">
-                                <img className="drh-car-img" src="/images/slance_65-cut.webp" srcSet="/images/slance_65-cut-700x878.webp 700w, /images/slance_65-cut.webp 900w" sizes="(maxWidth:767px) 62vw, 30vw"width="900" height="1129" loading="lazy" decoding="async" alt="Слънце, ръчна дърворезба" />
-                                    <div className="drh-car-txt">
-                                        <p className="drh-car-cat">Дърворезбено пано</p>
-                                        <h3 className="drh-car-name">Слънце</h3>
-                                        <p className="drh-car-des">Слънце с лъчи и лице; топъл мотив за кухня или антре.</p>
-                                        <p className="drh-car-price">185.00&nbsp;лв.</p>
-                                        <a className="drh-btn drh-btn-p drh-car-cta" href="/produkt/%D1%81%D0%BB%D1%8A%D0%BD%D1%86%D0%B5/">Вижте изделието</a>
-                                    </div>
-                            </article>
-                            <article className="drh-car-i" role="group" aria-roledescription="слайд" aria-label="Птица – елипса">
-                                <img className="drh-car-img" src="/images/ptica_elipsa_12-1-cut.webp" srcSet="/images/ptica_elipsa_12-1-cut-700x878.webp 700w, /images/ptica_elipsa_12-1-cut.webp 900w" sizes="(maxWidth:767px) 62vw, 30vw"width="900" height="1129" loading="lazy" decoding="async" alt="Птица – елипса, ръчна дърворезба" />
-                                    <div className="drh-car-txt">
-                                        <p className="drh-car-cat">Дърворезбено пано</p>
-                                        <h3 className="drh-car-name">Птица – елипса</h3>
-                                        <p className="drh-car-des">Птица в елипса, вписана сред листа и цвят.</p>
-                                        <p className="drh-car-price">165.00&nbsp;лв.</p>
-                                        <a className="drh-btn drh-btn-p drh-car-cta" href="/produkt/%D0%BF%D1%82%D0%B8%D1%86%D0%B0-%D0%B5%D0%BB%D0%B8%D0%BF%D1%81%D0%B0/">Вижте изделието</a>
-                                    </div>
-                            </article>
+                                </article>
+                            ))}
                         </div>
                     </div>
                     <div className="drh-wrap drh-car-nav">
-                        <p className="drh-car-count"><span id="drh-car-n">1</span> / 8</p>
+                        <p className="drh-car-count">{activeNumber} / {featured.length}</p>
                         <div className="drh-car-btns">
-                            <button className="drh-car-b" id="drh-car-prev" type="button" aria-label="Предишно изделие" aria-controls="drh-car-list">
+                            <button className="drh-car-b" type="button" aria-label="Предишно изделие" aria-controls="drh-car-list" onClick={prevHandler}>
                                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"></path></svg>
                             </button>
-                            <button className="drh-car-b" id="drh-car-next" type="button" aria-label="Следващо изделие" aria-controls="drh-car-list">
+                            <button className="drh-car-b" type="button" aria-label="Следващо изделие" aria-controls="drh-car-list" onClick={nextHandler}>
                                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M9 5l7 7-7 7"></path></svg>
                             </button>
                         </div>
                     </div>
-                    <p className="drh-sr" id="drh-car-live" aria-live="polite"></p>
+                    <p className="drh-sr" aria-live="polite">{active.name}</p>
                 </div>
 
                 <div className="drh-wrap">
-                    <a className="drh-btn drh-btn-s drh-only-m" href="/magazin/">Вижте всички продукти</a>
+                    <Link className="drh-btn drh-btn-s drh-only-m" to="/catalog">Вижте всички изделия</Link>
                 </div>
             </section>
 
-
             <section className="drh-s drh-custom">
                 <div className="drh-wrap drh-custom-g">
-                    <img className="drh-custom-img" src="/images/dleto-darvorezbi.webp"width="500" height="500" loading="lazy" decoding="async" alt="Длето, с което се изработва дърворезбата" />
-                        <div>
-                            <p className="drh-kicker">Индивидуална изработка</p>
-                            <h2 className="drh-h2">Имате собствена идея?</h2>
-                            <p className="drh-lede">Вие я вдъхновявате. Ние я изваяваме в дърво.</p>
-                            <ol className="drh-steps">
-                                <li><span className="drh-sn">1</span><span className="drh-st">Идея</span><span className="drh-sx">Изпращате ни снимка, скица или описание.</span></li>
-                                <li><span className="drh-sn">2</span><span className="drh-st">Проект</span><span className="drh-sx">Уточняваме размери, дървесина и детайли.</span></li>
-                                <li><span className="drh-sn">3</span><span className="drh-st">Изработка</span><span className="drh-sx">Идеята ви се превръща в уникална дърворезба.</span></li>
-                            </ol>
-                            <a className="drh-btn drh-btn-p" href="/kontakti/">Изпратете запитване</a>
-                        </div>
+                    <img className="drh-custom-img" src="/images/dleto-darvorezbi.webp" width="500" height="500" loading="lazy" decoding="async" alt="Длето, с което се изработва дърворезбата" />
+                    <div>
+                        <p className="drh-kicker">Индивидуална изработка</p>
+                        <h2 className="drh-h2">Имате собствена идея?</h2>
+                        <p className="drh-lede">Вие я вдъхновявате. Ние я изваяваме в дърво.</p>
+                        <ol className="drh-steps">
+                            <li><span className="drh-sn">1</span><span className="drh-st">Идея</span><span className="drh-sx">Изпращате ни снимка, скица или описание.</span></li>
+                            <li><span className="drh-sn">2</span><span className="drh-st">Проект</span><span className="drh-sx">Уточняваме размери, дървесина и детайли.</span></li>
+                            <li><span className="drh-sn">3</span><span className="drh-st">Изработка</span><span className="drh-sx">Идеята ви се превръща в уникална дърворезба.</span></li>
+                        </ol>
+                        <a className="drh-btn drh-btn-p" href={contactEmail}>Изпратете запитване</a>
+                    </div>
                 </div>
             </section>
 
@@ -186,59 +149,8 @@ export default function Home() {
                         <h2 className="drh-h2">Дърворезбата в детайл</h2>
                         <p className="drh-body">Всяко изделие започва от парче дърво и завършва в ръцете на майстора. Резбата се изпълнява изцяло на ръка, с длета и търпение, така както се е правило поколения наред.</p>
                         <p className="drh-body">Работилницата ни е в Пазарджик, в сърцето на българската резбарска традиция. Оттук излизат пана, пластики и фигури, всяко от които носи следата на ръката, която го е издялала.</p>
-                        <a className="drh-link" href="/za-nas/">Повече за нас <span aria-hidden="true">→</span></a>
                     </div>
-                    <img className="drh-craft-img" src="/images/darveni-stargotini.webp"width="612" height="408" loading="lazy" decoding="async" alt="Дървени стърготини след ръчна резба" />
-                </div>
-            </section>
-
-            <section className="drh-s drh-gal">
-                <div className="drh-wrap">
-                    <div className="drh-head">
-                        <div>
-                            <p className="drh-kicker drh-kicker-g">Галерия</p>
-                            <h2 className="drh-h2 drh-on-dark">Резбата отблизо</h2>
-                        </div>
-                        <a className="drh-link-l drh-head-l" href="/galeriya/">Разгледайте галерията <span aria-hidden="true">→</span></a>
-                    </div>
-                    <div className="drh-mos">
-                        <figure className="drh-m drh-m-big"><img src="/images/ptica_elipsa_40-1-700x878.jpg"width="700" height="878" loading="lazy" decoding="async" alt="Дърворезбено пано „Птица с цветя“" /></figure>
-                        <figure className="drh-m "><img src="/images/ptici_25-430x540.jpg"width="430" height="540" loading="lazy" decoding="async" alt="Дърворезбено пано „Птици“" /></figure>
-                        <figure className="drh-m "><img src="/images/petle_goliamo_54-1-430x540.jpg"width="430" height="540" loading="lazy" decoding="async" alt="Дърворезба „Петле“" /></figure>
-                        <figure className="drh-m "><img src="/images/momiche_s_rozi_55-430x540.jpg"width="430" height="540" loading="lazy" decoding="async" alt="Дърворезбена пластика „Момиче с рози“" /></figure>
-                        <figure className="drh-m "><img src="/images/nestinarka_37-1-430x557.jpg"width="430" height="557" loading="lazy" decoding="async" alt="Дърворезбено пано „Нестинарка“" /></figure>
-                    </div>
-                    <a className="drh-link-l drh-only-m drh-center" href="/galeriya/">Разгледайте галерията <span aria-hidden="true">→</span></a>
-                </div>
-            </section>
-
-            <section className="drh-s drh-arts">
-                <div className="drh-wrap">
-                    <div className="drh-head">
-                        <div>
-                            <p className="drh-kicker">От работилницата</p>
-                            <h2 className="drh-h2">Полезни статии</h2>
-                        </div>
-                        <a className="drh-link drh-head-l" href="/blog/">Вижте всички статии <span aria-hidden="true">→</span></a>
-                    </div>
-                    <div className="drh-art-g">
-                        <a className="drh-art" href="/pesestenie-na-istoricheski-park/">
-                            <span className="drh-art-img"><img src="/images/istoricheski-park-400x266.webp"width="400" height="266" loading="lazy" decoding="async" alt="" /></span>
-                            <time className="drh-art-d" dateTime="2024-08-23">23 август 2024</time>
-                            <span className="drh-art-r"><span className="drh-art-t">Потапяне в българската история: посещение на „Исторически парк“</span><span className="drh-arr" aria-hidden="true">→</span></span>
-                        </a>
-                        <a className="drh-art" href="/durvorezbata-v-bulgaria/">
-                            <span className="drh-art-img"><img src="/images/pexels-photo-175709-400x280.jpeg"width="400" height="280" loading="lazy" decoding="async" alt="" /></span>
-                            <time className="drh-art-d" dateTime="2023-10-27">27 октомври 2023</time>
-                            <span className="drh-art-r"><span className="drh-art-t">Дърворезбата в България: традиции и бъдеще</span><span className="drh-arr" aria-hidden="true">→</span></span>
-                        </a>
-                        <a className="drh-art drh-hide-m" href="/reinterprets-the-classic-bookshelf/">
-                            <span className="drh-art-img"><img src="/images/izkustvoto-na-darvorezbata-375x300.webp"width="375" height="300" loading="lazy" decoding="async" alt="" /></span>
-                            <time className="drh-art-d" dateTime="2021-08-27">27 август 2021</time>
-                            <span className="drh-art-r"><span className="drh-art-t">Изкуството на дърворезбата: магията на ръчната изработка</span><span className="drh-arr" aria-hidden="true">→</span></span>
-                        </a>
-                    </div>
-                    <a className="drh-link drh-only-m drh-center" href="/blog/">Вижте всички статии <span aria-hidden="true">→</span></a>
+                    <img className="drh-craft-img" src="/images/darveni-stargotini.webp" width="612" height="408" loading="lazy" decoding="async" alt="Дървени стърготини след ръчна резба" />
                 </div>
             </section>
 
@@ -268,7 +180,7 @@ export default function Home() {
                         </details>
                         <details className="drh-faq-i">
                             <summary className="drh-faq-q"><span>Как мога да направя поръчка?</span><span className="drh-faq-s" aria-hidden="true"></span></summary>
-                            <div className="drh-faq-a"><p>Изберете изделие от магазина или ни изпратете запитване за индивидуална изработка. Може да се свържете с нас и по телефон.</p></div>
+                            <div className="drh-faq-a"><p>Изберете изделие от каталога или ни изпратете запитване за индивидуална изработка. Може да се свържете с нас и по телефон.</p></div>
                         </details>
                     </div>
                 </div>
@@ -280,10 +192,10 @@ export default function Home() {
                     <h2 className="drh-h2 drh-on-dark">Имате идея? Нека я издяламе.</h2>
                     <p className="drh-cta-p">Свържете се с нас и ни разкажете какво си представяте.</p>
                     <div className="drh-cta-c">
-                        <a href="tel:+359898910633">+359 888 777 666</a>
-                        <a href="mailto:office@darvorezbi.com">office@darvorezbi.com</a>
+                        <a href="tel:+359888777666">+359 888 777 666</a>
+                        <a href={contactEmail}>office@darvorezbi.com</a>
                     </div>
-                    <a className="drh-btn drh-btn-p" href="/kontakti/">Изпратете запитване</a>
+                    <a className="drh-btn drh-btn-p" href={contactEmail}>Изпратете запитване</a>
                 </div>
             </section>
 

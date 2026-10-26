@@ -23,7 +23,7 @@ export default function Footer() {
                 <div className="df-col">
                     <h2 className="df-h">Контакти</h2>
                     <ul>
-                        <li><a href="tel:+359898910633">+359 898 910 633</a></li>
+                        <li><a href="tel:+359888777666">+359 888 777 666</a></li>
                         <li>Работилница в Пазарджик</li>
                     </ul>
                 </div>
