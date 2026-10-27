@@ -11,6 +11,7 @@ Darvorezbi is a small catalog of handmade wood carvings - figures and wall panel
 ## Design
 
 Darvorezbi is a business idea of mine - a place for handmade wood carvings - that I may keep developing after the course. For this project I built its look as a small design system: a warm walnut and ivory palette, Playfair Display for headings, Manrope for text, and shared spacing and shadows. All of it lives in plain CSS files, with design tokens as CSS variables.
+Note: the carousel on the home page is just static list in the codebase which i liked as a design purpose. The catalog itself, the details, likes and comments all come from an API.
 
 ## Tech stack
 
